@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -40,6 +40,13 @@ window.navigator.getUserMedia =
   window.navigator.getUserMedia || mediaDevices.getUserMedia;
 
 function App() {
+  const [pitelSDK, setPitelSDK] = useState();
+
+  useEffect(() => {
+    const pitelSDKRes = registerExtension();
+    setPitelSDK(pitelSDKRes);
+  }, []);
+
   const sdkOptions = {
     sipOnly: true,
     sipDomain: 'mobile.tel4vn.com:50061',
@@ -52,20 +59,47 @@ function App() {
     pitelRegister(sdkOptions);
   }
   const callOutgoing = () => {
-    pitelCallOut(sdkOptions);
+    const pitelSDKRes = pitelCallOut(sdkOptions);
+    setPitelSDK(pitelSDKRes);
+  }
+  const hangup = () => {
+    pitelSDK.hangup();
+  }
+
+  const handleMute = () => {
+    pitelSDK.mute();
+  }
+  const handleUnMute = () => {
+    pitelSDK.unmute();
+  }
+  const speakerOn = () => {
+  }
+  const speakerOff = () => {
   }
 
   return (
     <View style={styles.container}>
       <Text>Pushkit, Callkit</Text>
-      <TouchableOpacity style={styles.btnCall} onPress={() => registerExtension()}>
+      <TouchableOpacity style={styles.btnCall} onPress={registerExtension}>
         <Text>Register</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.btnCall} onPress={() => callOutgoing()}>
+      <TouchableOpacity style={styles.btnCall} onPress={callOutgoing}>
         <Text>Call out</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.btnCall} onPress={() => hangup()}>
+      <TouchableOpacity style={styles.btnCall} onPress={hangup}>
         <Text>Hand up</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.btnCall} onPress={handleMute}>
+        <Text>Mute</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.btnCall} onPress={handleUnMute}>
+        <Text>Unmute</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.btnCall} onPress={speakerOn}>
+        <Text>Speaker on</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.btnCall} onPress={speakerOff}>
+        <Text>Speaker off</Text>
       </TouchableOpacity>
     </View>
   );

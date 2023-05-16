@@ -29,4 +29,5 @@ export const pitelCallOut = (sdkOptions) => {
         },
     };
     let pitelSDK = new PitelSDK('xxx', 'xxx', '103', sdkDelegates, sdkOptions);
+    return pitelSDK;
 }

@@ -25,6 +25,7 @@ import {
 } from 'pitel-react-native-webrtc';
 import { pitelRegister } from './libs/pitel_register';
 import { pitelCallOut } from './libs/pitel_call_out';
+import { Counter } from 'react-native-pitel-voip';
 
 
 window.RTCPeerConnection = window.RTCPeerConnection || RTCPeerConnection;
@@ -79,6 +80,7 @@ function App() {
 
   return (
     <View style={styles.container}>
+      <Counter/>
       <Text>Pushkit, Callkit</Text>
       <TouchableOpacity style={styles.btnCall} onPress={registerExtension}>
         <Text>Register</Text>

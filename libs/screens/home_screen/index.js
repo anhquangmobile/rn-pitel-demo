@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {TouchableOpacity, Text, StyleSheet, View} from 'react-native';
 import {PitelCallOut} from 'react-native-pitel-voip';
 
 export const HomeScreen = ({navigation}) => {
   const [pitelSDK, setPitelSDK] = useState();
+  const [callOut, setCallOut] = useState(false);
 
   const sdkOptions = {
     sipOnly: true,
@@ -13,9 +14,18 @@ export const HomeScreen = ({navigation}) => {
     debug: true,
   };
 
+  useEffect(() => {
+    if (callOut && pitelSDK) {
+      navigation.navigate('Call', {
+        pitelSDK: pitelSDK,
+      });
+      setCallOut(false);
+    }
+  }, [pitelSDK, callOut]);
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.btnCall}
         onPress={() => {
           navigation.navigate('Call', {
@@ -23,20 +33,18 @@ export const HomeScreen = ({navigation}) => {
           });
         }}>
         <Text>Call screen</Text>
-      </TouchableOpacity>
-      {/* <PitelCallOut
+      </TouchableOpacity> */}
+      <PitelCallOut
         btnTitle={'Call'}
         callToNumber={'104'}
         sdkOptions={sdkOptions}
         pitelSDK={pitelSDK}
         setPitelSDK={setPitelSDK}
         handleCallOut={() => {
-          navigation.navigate('Call', {
-            pitelSDK: pitelSDK,
-          });
+          setCallOut(true);
         }}
         style={styles.btnCall}
-      /> */}
+      />
     </View>
   );
 };

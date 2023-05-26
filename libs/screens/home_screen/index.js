@@ -16,6 +16,7 @@ export const HomeScreen = ({navigation}) => {
   };
 
   useEffect(() => {
+    InCallManager.start({media: 'audio'});
     if (callOut && pitelSDK) {
       navigation.navigate('Call', {
         pitelSDK: pitelSDK,
@@ -42,7 +43,6 @@ export const HomeScreen = ({navigation}) => {
         pitelSDK={pitelSDK}
         setPitelSDK={setPitelSDK}
         handleCallOut={() => {
-          InCallManager.start({media: 'audio'});
           setCallOut(true);
         }}
         onHangup={() => {

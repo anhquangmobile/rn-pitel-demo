@@ -25,7 +25,6 @@ export const CallScreen = ({route, navigation}) => {
       onSpeaker={() => {
         InCallManager.setSpeakerphoneOn(true);
         setSpeaker(!speaker);
-        console.log('------onSpeaker------');
       }}
     />
   );

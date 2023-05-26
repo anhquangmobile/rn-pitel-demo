@@ -16,6 +16,7 @@
     "pitel-sdk-webrtc": "^1.0.4",
     "react": "18.2.0",
     "react-native": "0.71.4",
+    "react-native-incall-manager": "^4.0.1",
     "react-native-pitel-voip": "file:.yalc/react-native-pitel-voip",
     "react-native-safe-area-context": "^4.5.3",
     "react-native-screens": "^3.20.0",

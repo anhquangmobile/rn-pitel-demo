@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {TouchableOpacity, Text, StyleSheet, View} from 'react-native';
 import {PitelCallOut} from 'react-native-pitel-voip';
-import InCallManager from 'react-native-incall-manager';
+// import InCallManager from 'react-native-incall-manager';
 
 export const HomeScreen = ({navigation}) => {
   const [pitelSDK, setPitelSDK] = useState();
@@ -16,7 +16,6 @@ export const HomeScreen = ({navigation}) => {
   };
 
   useEffect(() => {
-    InCallManager.start({media: 'audio'});
     if (callOut && pitelSDK) {
       navigation.navigate('Call', {
         pitelSDK: pitelSDK,

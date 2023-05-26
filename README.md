@@ -15,6 +15,7 @@ yalc publish
 
 ```js
 npm uninstall -S react-native-pitel-voip
+yarn add react-native-pitel-voip
 yarn i
 ```
 

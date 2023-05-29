@@ -6,6 +6,7 @@ import {PitelCallOut} from 'react-native-pitel-voip';
 export const HomeScreen = ({navigation}) => {
   const [pitelSDK, setPitelSDK] = useState();
   const [callOut, setCallOut] = useState(false);
+  const [callState, setCallState] = useState('');
 
   const sdkOptions = {
     sipOnly: true,
@@ -16,13 +17,24 @@ export const HomeScreen = ({navigation}) => {
   };
 
   useEffect(() => {
+    switch (callState) {
+      case 'CALL_RECEIVED':
+        pitelSDK.accept();
+        navigation.navigate('Call', {
+          pitelSDK: pitelSDK,
+        });
+        break;
+      case 'CALL_HANGUP':
+        navigation.popToTop();
+        break;
+    }
     if (callOut && pitelSDK) {
       navigation.navigate('Call', {
         pitelSDK: pitelSDK,
       });
       setCallOut(false);
     }
-  }, [pitelSDK, callOut]);
+  }, [pitelSDK, callOut, callState]);
 
   return (
     <View style={styles.container}>
@@ -41,6 +53,8 @@ export const HomeScreen = ({navigation}) => {
         sdkOptions={sdkOptions}
         pitelSDK={pitelSDK}
         setPitelSDK={setPitelSDK}
+        callState={callState}
+        setCallState={setCallState}
         handleCallOut={() => {
           setCallOut(true);
         }}

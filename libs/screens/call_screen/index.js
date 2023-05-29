@@ -15,7 +15,6 @@ export const CallScreen = ({route, navigation}) => {
       microState={mute}
       speakerState={speaker}
       onHangup={() => {
-        console.log('===========onHangup===========');
         pitelSDK.hangup();
       }}
       onMicro={() => {

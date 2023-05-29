@@ -1,12 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {TouchableOpacity, Text, StyleSheet, View} from 'react-native';
-import {PitelCallOut} from 'react-native-pitel-voip';
-// import InCallManager from 'react-native-incall-manager';
+import {PitelCallOut, useRegister} from 'react-native-pitel-voip';
 
 export const HomeScreen = ({navigation}) => {
-  const [pitelSDK, setPitelSDK] = useState();
   const [callOut, setCallOut] = useState(false);
-  const [callState, setCallState] = useState('');
 
   const sdkOptions = {
     sipOnly: true,
@@ -15,6 +12,7 @@ export const HomeScreen = ({navigation}) => {
     sipPassword: 'Tel4vn.com123@',
     debug: true,
   };
+  const {callState, pitelSDK} = useRegister(sdkOptions);
 
   useEffect(() => {
     switch (callState) {
@@ -38,23 +36,10 @@ export const HomeScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      {/* <TouchableOpacity
-        style={styles.btnCall}
-        onPress={() => {
-          navigation.navigate('Call', {
-            pitelSDK: pitelSDK,
-          });
-        }}>
-        <Text>Call screen</Text>
-      </TouchableOpacity> */}
       <PitelCallOut
         btnTitle={'Call'}
         callToNumber={'104'}
         sdkOptions={sdkOptions}
-        pitelSDK={pitelSDK}
-        setPitelSDK={setPitelSDK}
-        callState={callState}
-        setCallState={setCallState}
         handleCallOut={() => {
           setCallOut(true);
         }}

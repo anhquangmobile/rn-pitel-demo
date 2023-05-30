@@ -10,9 +10,10 @@ export const HomeScreen = ({navigation}) => {
     sipPassword: 'Tel4vn.com123@',
     debug: true,
   };
+  const [pitelSDK, setPitelSDK] = useState();
+
   const {
     callState,
-    pitelSDK,
     receivedPhoneNumber,
     isCallOut,
 
@@ -21,39 +22,10 @@ export const HomeScreen = ({navigation}) => {
     setIsCallOut,
   } = useRegister({
     sdkOptions: sdkOptions,
+    setPitelSDK: setPitelSDK,
   });
 
   const phoneNumber = '104';
-
-  useEffect(() => {
-    console.log('======callState================', callState);
-
-    switch (callState) {
-      case 'CALL_RECEIVED':
-        setIsCallOut(false);
-        navigation.navigate('Call', {
-          pitelSDK: pitelSDK,
-          phoneNumber: receivedPhoneNumber,
-          direction: 'Incoming',
-          callState,
-        });
-        break;
-      case 'CALL_HANGUP':
-        navigation.popToTop();
-        setCallState('REGISTER');
-        break;
-      case 'CALL_CREATED':
-        if (isCallOut) {
-          navigation.navigate('Call', {
-            pitelSDK: pitelSDK,
-            phoneNumber: phoneNumber,
-            direction: 'Outgoing',
-            callState,
-          });
-        }
-        break;
-    }
-  }, [pitelSDK, callState, receivedPhoneNumber, isCallOut]);
 
   return (
     <View style={styles.container}>
@@ -62,6 +34,29 @@ export const HomeScreen = ({navigation}) => {
         callToNumber={phoneNumber}
         sdkOptions={sdkOptions}
         pitelSDK={pitelSDK}
+        onReceived={() => {
+          navigation.navigate('Call', {
+            pitelSDK: pitelSDK,
+            phoneNumber: receivedPhoneNumber,
+            direction: 'Incoming',
+            callState,
+          });
+        }}
+        onHangup={() => {
+          navigation.popToTop();
+        }}
+        onCreated={() => {
+          navigation.navigate('Call', {
+            pitelSDK: pitelSDK,
+            phoneNumber: phoneNumber,
+            direction: 'Outgoing',
+            callState,
+          });
+        }}
+        setIsCallOut={setIsCallOut}
+        isCallOut={isCallOut}
+        setCallState={setCallState}
+        callState={callState}
         style={styles.btnCall}
         handleCallOut={() => {
           setIsCallOut(true);

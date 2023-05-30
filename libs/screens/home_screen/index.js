@@ -3,8 +3,6 @@ import {TouchableOpacity, Text, StyleSheet, View} from 'react-native';
 import {PitelCallOut, useRegister} from 'react-native-pitel-voip';
 
 export const HomeScreen = ({navigation}) => {
-  const [callOut, setCallOut] = useState(false);
-
   const sdkOptions = {
     sipOnly: true,
     sipDomain: 'mobile.tel4vn.com:50061',
@@ -12,47 +10,46 @@ export const HomeScreen = ({navigation}) => {
     sipPassword: 'Tel4vn.com123@',
     debug: true,
   };
-  const {callState, pitelSDK, setCallState, setPitelSDK, registerFunc} =
-    useRegister({sdkOptions: sdkOptions});
+  const {callState, pitelSDK, receivedPhoneNumber, setCallState, registerFunc} =
+    useRegister({
+      sdkOptions: sdkOptions,
+    });
+
+  const phoneNumber = '104';
 
   useEffect(() => {
     console.log('======callState================', callState);
+
     switch (callState) {
       case 'CALL_RECEIVED':
         pitelSDK.accept();
         navigation.navigate('Call', {
           pitelSDK: pitelSDK,
+          phoneNumber: receivedPhoneNumber,
+          direction: 'Incoming',
         });
         break;
       case 'CALL_HANGUP':
         navigation.popToTop();
         setCallState('REGISTER');
         break;
+      case 'CALL_CREATED':
+        navigation.navigate('Call', {
+          pitelSDK: pitelSDK,
+          phoneNumber: phoneNumber,
+          direction: 'Outgoing',
+        });
+        break;
     }
-    if (callOut && pitelSDK) {
-      navigation.navigate('Call', {
-        pitelSDK: pitelSDK,
-      });
-      setCallOut(false);
-    }
-  }, [pitelSDK, callOut, callState]);
+  }, [pitelSDK, callState, receivedPhoneNumber]);
 
   return (
     <View style={styles.container}>
       <PitelCallOut
         btnTitle={'Call'}
-        callToNumber={'104'}
+        callToNumber={phoneNumber}
         sdkOptions={sdkOptions}
         pitelSDK={pitelSDK}
-        setPitelSDK={setPitelSDK}
-        setCallState={setCallState}
-        callOut={callOut}
-        handleCallOut={() => {
-          setCallOut(true);
-        }}
-        onHangup={() => {
-          navigation.popToTop();
-        }}
         style={styles.btnCall}
       />
       <TouchableOpacity

@@ -7,11 +7,13 @@ export const CallScreen = ({route, navigation}) => {
   const [mute, setMute] = useState(false);
   const [speaker, setSpeaker] = useState(false);
 
-  const {pitelSDK} = route.params;
+  const {pitelSDK, phoneNumber, direction} = route.params;
 
   return (
     <PitelCallKit
       pitelSDK={pitelSDK}
+      phoneNumber={phoneNumber}
+      direction={direction}
       microState={mute}
       speakerState={speaker}
       onHangup={() => {

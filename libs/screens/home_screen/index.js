@@ -12,9 +12,11 @@ export const HomeScreen = ({navigation}) => {
     sipPassword: 'Tel4vn.com123@',
     debug: true,
   };
-  const {callState, pitelSDK} = useRegister(sdkOptions);
+  const {callState, pitelSDK, setCallState, setPitelSDK, registerFunc} =
+    useRegister({sdkOptions: sdkOptions});
 
   useEffect(() => {
+    console.log('======callState================', callState);
     switch (callState) {
       case 'CALL_RECEIVED':
         pitelSDK.accept();
@@ -24,6 +26,7 @@ export const HomeScreen = ({navigation}) => {
         break;
       case 'CALL_HANGUP':
         navigation.popToTop();
+        setCallState('REGISTER');
         break;
     }
     if (callOut && pitelSDK) {
@@ -40,6 +43,10 @@ export const HomeScreen = ({navigation}) => {
         btnTitle={'Call'}
         callToNumber={'104'}
         sdkOptions={sdkOptions}
+        pitelSDK={pitelSDK}
+        setPitelSDK={setPitelSDK}
+        setCallState={setCallState}
+        callOut={callOut}
         handleCallOut={() => {
           setCallOut(true);
         }}
@@ -48,6 +55,13 @@ export const HomeScreen = ({navigation}) => {
         }}
         style={styles.btnCall}
       />
+      <TouchableOpacity
+        style={{height: 50, width: 100, marginTop: 20}}
+        onPress={() => {
+          registerFunc();
+        }}>
+        <Text>Register</Text>
+      </TouchableOpacity>
     </View>
   );
 };

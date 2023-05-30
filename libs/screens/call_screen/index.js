@@ -7,11 +7,12 @@ export const CallScreen = ({route, navigation}) => {
   const [mute, setMute] = useState(false);
   const [speaker, setSpeaker] = useState(false);
 
-  const {pitelSDK, phoneNumber, direction} = route.params;
+  const {pitelSDK, phoneNumber, direction, callState} = route.params;
 
   return (
     <PitelCallKit
       pitelSDK={pitelSDK}
+      callState={callState}
       phoneNumber={phoneNumber}
       direction={direction}
       microState={mute}

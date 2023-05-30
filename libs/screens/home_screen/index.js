@@ -10,10 +10,18 @@ export const HomeScreen = ({navigation}) => {
     sipPassword: 'Tel4vn.com123@',
     debug: true,
   };
-  const {callState, pitelSDK, receivedPhoneNumber, setCallState, registerFunc} =
-    useRegister({
-      sdkOptions: sdkOptions,
-    });
+  const {
+    callState,
+    pitelSDK,
+    receivedPhoneNumber,
+    isCallOut,
+
+    setCallState,
+    registerFunc,
+    setIsCallOut,
+  } = useRegister({
+    sdkOptions: sdkOptions,
+  });
 
   const phoneNumber = '104';
 
@@ -22,11 +30,12 @@ export const HomeScreen = ({navigation}) => {
 
     switch (callState) {
       case 'CALL_RECEIVED':
-        pitelSDK.accept();
+        setIsCallOut(false);
         navigation.navigate('Call', {
           pitelSDK: pitelSDK,
           phoneNumber: receivedPhoneNumber,
           direction: 'Incoming',
+          callState,
         });
         break;
       case 'CALL_HANGUP':
@@ -34,14 +43,17 @@ export const HomeScreen = ({navigation}) => {
         setCallState('REGISTER');
         break;
       case 'CALL_CREATED':
-        navigation.navigate('Call', {
-          pitelSDK: pitelSDK,
-          phoneNumber: phoneNumber,
-          direction: 'Outgoing',
-        });
+        if (isCallOut) {
+          navigation.navigate('Call', {
+            pitelSDK: pitelSDK,
+            phoneNumber: phoneNumber,
+            direction: 'Outgoing',
+            callState,
+          });
+        }
         break;
     }
-  }, [pitelSDK, callState, receivedPhoneNumber]);
+  }, [pitelSDK, callState, receivedPhoneNumber, isCallOut]);
 
   return (
     <View style={styles.container}>
@@ -51,6 +63,9 @@ export const HomeScreen = ({navigation}) => {
         sdkOptions={sdkOptions}
         pitelSDK={pitelSDK}
         style={styles.btnCall}
+        handleCallOut={() => {
+          setIsCallOut(true);
+        }}
       />
       <TouchableOpacity
         style={{height: 50, width: 100, marginTop: 20}}
@@ -58,6 +73,18 @@ export const HomeScreen = ({navigation}) => {
           registerFunc();
         }}>
         <Text>Register</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{height: 50, width: 100, marginTop: 20}}
+        onPress={() => {
+          navigation.navigate('Call', {
+            pitelSDK: pitelSDK,
+            phoneNumber: '104',
+            direction: 'Incoming',
+            callState: 'CALL_RECEIVED',
+          });
+        }}>
+        <Text>Navigate</Text>
       </TouchableOpacity>
     </View>
   );

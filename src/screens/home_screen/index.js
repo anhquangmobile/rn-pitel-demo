@@ -54,7 +54,9 @@ export const HomeScreen = ({navigation}) => {
   };
 
   const handleHangup = () => {
-    navigation.popToTop();
+    if (navigation.canGoBack()) {
+      navigation.popToTop();
+    }
   };
 
   return (

@@ -8,9 +8,9 @@ export const HomeScreen = ({navigation}) => {
   // sdkOptions config
   const sdkOptions = {
     sipOnly: true,
-    sipDomain: 'mobile.tel4vn.com:50061',
-    wsServer: 'wss://wss-mobile.tel4vn.com:7444',
-    sipPassword: 'Tel4vn.com123@',
+    sipDomain: `${domain}`,
+    wsServer: `${wssServer}`,
+    sipPassword: `${extensionPassword}`,
     debug: true,
   };
 

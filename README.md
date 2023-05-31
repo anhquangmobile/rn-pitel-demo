@@ -2,34 +2,29 @@
 
 React Native - Pitel VoIP demo
 
-# Installation
+# Initialize
 
-1. npm install -g yalc
-2. In react-native-pitel-voip
-
-```js
-yalc publish
+```yaml
+yarn install
 ```
 
-3. In rn-pitel-demo
+# Run source
 
-```js
-npm uninstall -S react-native-pitel-voip
-yarn add react-native-pitel-voip
-yarn i
+- IOS
+
+```
+yarn ios
 ```
 
-# Update package
+- Android
 
-1. In react-native-pitel-voip
-
-```js
-yalc push
-yalc push --script
+```
+yarn android
 ```
 
-2. In rn-pitel-demo
+- Run on specific device
 
-```js
-yarn i
+```
+yarn ios --device="device_name"
+yarn android --device="device_name"
 ```

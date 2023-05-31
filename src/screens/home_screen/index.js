@@ -70,7 +70,7 @@ export const HomeScreen = ({navigation}) => {
             pitelSDK.unregister();
           }
         }}>
-        <Text>Register</Text>
+        <Text>{registerState === 'REGISTER' ? 'UNREGISTER' : 'REGISTER'}</Text>
       </TouchableOpacity>
       <PitelCallOut
         child={<Text>Call</Text>}

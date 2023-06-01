@@ -6041,10 +6041,10 @@ pitel-react-native-webrtc@^106.0.0-beta.6:
     event-target-shim "6.0.2"
     tar "6.1.11"
 
-pitel-sdk-webrtc@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/pitel-sdk-webrtc/-/pitel-sdk-webrtc-1.0.5.tgz#0096117c1bb543d34eb61161236ae216f04f9db1"
-  integrity sha512-67mZo+eDJOhE+6nbIuCIYb1Z0yB4WS9gR4JIWivf/u1doxXxmjtLqWkZOaUPiXnp1apA4ElOvLAf0zSQASh+Yw==
+pitel-sdk-webrtc@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/pitel-sdk-webrtc/-/pitel-sdk-webrtc-1.0.6.tgz#551e1be18eddb5bcb5fab977191506d4575f75f6"
+  integrity sha512-/E2l88IadfWMUrR52ctCGRg7kkHvfy9+Hs0uCUCE/7N/Kwu0CByUFZ6x4K+o2i3L0VP1qDLJDFKYoY9ti69Qzw==
 
 pkg-dir@^3.0.0:
   version "3.0.0"
@@ -6217,7 +6217,7 @@ react-native-incall-manager@^4.0.1:
   integrity sha512-Bqq7C+p7vCmCTpM8Xv6l4DJ3UJYzVr60IvkHMw1Ugs0KJswh3veBJrpk+hUPSETPT6J/5oUwxChXlNsymsh7fg==
 
 "react-native-pitel-voip@file:.yalc/react-native-pitel-voip":
-  version "0.0.5"
+  version "0.0.6"
 
 react-native-safe-area-context@^4.5.3:
   version "4.5.3"

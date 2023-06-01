@@ -6041,10 +6041,10 @@ pitel-react-native-webrtc@^106.0.0-beta.6:
     event-target-shim "6.0.2"
     tar "6.1.11"
 
-pitel-sdk-webrtc@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.npmjs.org/pitel-sdk-webrtc/-/pitel-sdk-webrtc-1.0.4.tgz"
-  integrity sha512-pfvJsiFoX5eElcWX0lAflQBjEd89ordRRo9gvQeO7O+SCqQXjp6wmgMgatFVisWiNluNEC4xQ1qvDCVnZwqDbQ==
+pitel-sdk-webrtc@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/pitel-sdk-webrtc/-/pitel-sdk-webrtc-1.0.5.tgz#0096117c1bb543d34eb61161236ae216f04f9db1"
+  integrity sha512-67mZo+eDJOhE+6nbIuCIYb1Z0yB4WS9gR4JIWivf/u1doxXxmjtLqWkZOaUPiXnp1apA4ElOvLAf0zSQASh+Yw==
 
 pkg-dir@^3.0.0:
   version "3.0.0"

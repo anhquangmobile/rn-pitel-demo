@@ -27,12 +27,13 @@ export const HomeScreen = ({navigation}) => {
   } = useRegister({
     sdkOptions: sdkOptions,
     setPitelSDK: setPitelSDK,
+    extension: '104', // register extension
   });
 
   useEffect(() => {}, [pitelSDK]);
 
   // Input call out phone number
-  const phoneNumber = '104';
+  const phoneNumber = '103';
 
   // Handle function
   const handleCreated = () => {

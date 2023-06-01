@@ -13,7 +13,7 @@
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
     "pitel-react-native-webrtc": "^106.0.0-beta.6",
-    "pitel-sdk-webrtc": "^1.0.4",
+    "pitel-sdk-webrtc": "^1.0.5",
     "react": "18.2.0",
     "react-native": "0.71.4",
     "react-native-incall-manager": "^4.0.1",

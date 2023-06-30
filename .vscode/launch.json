@@ -13,20 +13,20 @@
 //     ]
 // }
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Debug iOS",
-            "program": "${workspaceRoot}/.vscode/launch.json",
-            "type": "reactnative",
-            "request": "launch",
-            "platform": "ios",
-            "target": "Dung iphone",
-            "sourceMaps": true,
-            "cwd": "${workspaceRoot}"
-        }
-    ]
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug iOS",
+      "program": "${workspaceRoot}/.vscode/launch.json",
+      "type": "reactnative",
+      "request": "launch",
+      "platform": "ios",
+      "target": "Quang iPhone",
+      "sourceMaps": true,
+      "cwd": "${workspaceRoot}"
+    }
+  ]
 }

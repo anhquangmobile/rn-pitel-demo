@@ -13,6 +13,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		506140192A4E8E02008236EF /* CallKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506140182A4E8E02008236EF /* CallKit.framework */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +41,7 @@
 		1C0234418C734DA5AA5AF9E8 /* libPods-rn_pitel_demo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rn_pitel_demo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A272956C82B9213D89648C2 /* libPods-rn_pitel_demo-rn_pitel_demoTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rn_pitel_demo-rn_pitel_demoTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		506140172A4E7BCE008236EF /* rn_pitel_demo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = rn_pitel_demo.entitlements; path = rn_pitel_demo/rn_pitel_demo.entitlements; sourceTree = "<group>"; };
+		506140182A4E8E02008236EF /* CallKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CallKit.framework; path = System/Library/Frameworks/CallKit.framework; sourceTree = SDKROOT; };
 		6317BE98E6D7B446B100D343 /* Pods-rn_pitel_demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rn_pitel_demo.debug.xcconfig"; path = "Target Support Files/Pods-rn_pitel_demo/Pods-rn_pitel_demo.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = rn_pitel_demo/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B55D2CF3F42591B5F7C78CD6 /* Pods-rn_pitel_demo-rn_pitel_demoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rn_pitel_demo-rn_pitel_demoTests.debug.xcconfig"; path = "Target Support Files/Pods-rn_pitel_demo-rn_pitel_demoTests/Pods-rn_pitel_demo-rn_pitel_demoTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				05D3A9B6F8D06D68ABE69F6F /* libPods-rn_pitel_demo.a in Frameworks */,
+				506140192A4E8E02008236EF /* CallKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +104,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				506140182A4E8E02008236EF /* CallKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				1C0234418C734DA5AA5AF9E8 /* libPods-rn_pitel_demo.a */,
 				4A272956C82B9213D89648C2 /* libPods-rn_pitel_demo-rn_pitel_demoTests.a */,

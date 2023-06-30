@@ -2,6 +2,7 @@
 #import "RNCallKeep.h"
 #import <PushKit/PushKit.h>
 #import "RNVoipPushNotificationManager.h"
+#import <React/RCTLog.h>
 
                   
 #import <React/RCTBridge.h>
@@ -96,14 +97,22 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   // Process the received push
   [RNVoipPushNotificationManager didReceiveIncomingPushWithPayload:payload forType:(NSString *)type];
 
-  
+  RCTLog(@"Some information");
   NSDictionary *content = [payload.dictionaryPayload valueForKeyPath:@"aps"]; /* use this to pass any special data (ie. from your notification) down to RN. Can also be `nil` */
   // Retrieve information like handle and callerName here
   NSString *uuid = /* fetch for payload or ... */ [[[NSUUID UUID] UUIDString] lowercaseString];
-  NSDictionary *alert = [content valueForKey:@"alert"];
-  NSString *callerName = [alert valueForKey:@"title"];
-  NSString *handle = [alert valueForKey:@"body"];
+//  NSDictionary *alert = [content valueForKey:@"alert"];
+  NSString *callerName = [payload.dictionaryPayload valueForKey:@"nameCaller"];
+  NSString *handle = [payload.dictionaryPayload valueForKey:@"handle"];
+  
+// TEST
+//  NSString *uuid = @"44d915e1-5ff4-4bed-bf13-c423048ec97a";
+//  NSDictionary *alert = [content valueForKey:@"alert"];
+//  NSString *callerName = @"Anh Quang";
+//  NSString *handle = @"";
 
+
+  RCTLogInfo(@"Pretending to create an event %@ at %@", uuid, callerName);
   [RNCallKeep reportNewIncomingCall: uuid
                              handle: handle
                          handleType: @"generic"

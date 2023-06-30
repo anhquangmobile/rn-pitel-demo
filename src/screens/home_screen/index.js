@@ -5,12 +5,22 @@ import {PitelCallOut, useRegister} from 'react-native-pitel-voip';
 import styles from './styles';
 
 export const HomeScreen = ({navigation}) => {
+  //! SDK
   // sdkOptions config
+  // const sdkOptions = {
+  //   sipOnly: true,
+  //   sipDomain: `${domain}`,
+  //   wsServer: `${wssServer}`,
+  //   sipPassword: `${extensionPassword}`,
+  //   debug: true,
+  // };
+
+  //! SUPPORT TEST
   const sdkOptions = {
     sipOnly: true,
-    sipDomain: `${domain}`,
-    wsServer: `${wssServer}`,
-    sipPassword: `${extensionPassword}`,
+    sipDomain: 'ccp-demo.tel4vn.com',
+    wsServer: 'wss://psbc01.tel4vn.com:7444',
+    sipPassword: 'Agent20@@2023',
     debug: true,
   };
 
@@ -27,13 +37,13 @@ export const HomeScreen = ({navigation}) => {
   } = useRegister({
     sdkOptions: sdkOptions,
     setPitelSDK: setPitelSDK,
-    extension: '104', // register extension
+    extension: '120', // register extension
   });
 
   useEffect(() => {}, [pitelSDK]);
 
   // Input call out phone number
-  const phoneNumber = '103';
+  const phoneNumber = '121';
 
   // Handle function
   const handleCreated = () => {

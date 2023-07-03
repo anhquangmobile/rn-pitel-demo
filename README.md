@@ -28,3 +28,17 @@ yarn android
 yarn ios --device="device_name"
 yarn android --device="device_name"
 ```
+
+- Run android
+
+```
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+```
+
+```
+echo 'export PATH=${PATH}:$HOME/Library/Android/sdk/platform-tools/' >> ~/.zshrc
+source ~/.zshrc
+adb devices
+```

@@ -5,6 +5,7 @@ import {
   PitelCallNotif,
   useRegister,
 } from 'react-native-pitel-voip';
+import {uuid} from 'uuidv4';
 
 import styles from './styles';
 
@@ -134,6 +135,16 @@ export const HomeScreen = ({navigation}) => {
             {registerState === 'REGISTER' ? 'UNREGISTER' : 'REGISTER'}
           </Text>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.btnRegister}
+          onPress={() => {
+            const callUUID = uuid();
+            RNCallKeep.startCall(callUUID, '0375624006', '0375624006');
+          }}>
+          <Text>Start Call</Text>
+        </TouchableOpacity>
+
         <PitelCallOut
           child={<Text>Call</Text>}
           callToNumber={phoneNumber}

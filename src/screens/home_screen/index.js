@@ -4,16 +4,13 @@ import {
   PitelCallOut,
   PitelCallNotif,
   useRegister,
+  getFcmToken,
+  NotificationListener,
 } from 'react-native-pitel-voip';
 import 'react-native-get-random-values';
 import {v4 as uuidv4} from 'uuid';
 import RNCallKeep from 'react-native-callkeep';
 import BackgroundTimer from 'react-native-background-timer';
-import {
-  requestUserPermission,
-  getFcmToken,
-  NotificationListener,
-} from '../../push_notif';
 
 import styles from './styles';
 

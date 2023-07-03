@@ -5,9 +5,18 @@ import {
   PitelCallNotif,
   useRegister,
 } from 'react-native-pitel-voip';
-import {uuid} from 'uuidv4';
+import 'react-native-get-random-values';
+import {v4 as uuidv4} from 'uuid';
+import RNCallKeep from 'react-native-callkeep';
+import BackgroundTimer from 'react-native-background-timer';
 
 import styles from './styles';
+
+BackgroundTimer.start();
+const getRandomNumber = () => String(Math.floor(Math.random() * 100000));
+const getNewUuid = () => uuidv4();
+const hitSlop = {top: 10, left: 10, right: 10, bottom: 10};
+const format = uuid => uuid.split('-')[0];
 
 export const HomeScreen = ({navigation}) => {
   //! SDK
@@ -38,6 +47,7 @@ export const HomeScreen = ({navigation}) => {
       alertDescription: 'This application needs to access your phone accounts',
       cancelButton: 'Cancel',
       okButton: 'ok',
+      selfManaged: false,
     },
   };
 
@@ -96,6 +106,20 @@ export const HomeScreen = ({navigation}) => {
     }
   };
 
+  //! Android
+  const displayIncomingCallNow = () => {
+    displayIncomingCall(getRandomNumber());
+  };
+
+  const displayIncomingCall = number => {
+    const callUUID = getNewUuid();
+    // addCall(callUUID, number);
+
+    console.log(`[displayIncomingCall] ${format(callUUID)}, number: ${number}`);
+
+    RNCallKeep.displayIncomingCall(callUUID, number, number, 'number', false);
+  };
+
   return (
     <PitelCallNotif
       callId={callId}
@@ -137,12 +161,10 @@ export const HomeScreen = ({navigation}) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={styles.btnRegister}
-          onPress={() => {
-            const callUUID = uuid();
-            RNCallKeep.startCall(callUUID, '0375624006', '0375624006');
-          }}>
-          <Text>Start Call</Text>
+          onPress={displayIncomingCallNow}
+          style={styles.button}
+          hitSlop={hitSlop}>
+          <Text>Display incoming call now</Text>
         </TouchableOpacity>
 
         <PitelCallOut

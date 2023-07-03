@@ -1,4 +1,4 @@
-package com.rn_pitel_demo;
+package com.pitel.pitelconnect.dev;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

@@ -9,6 +9,11 @@ import 'react-native-get-random-values';
 import {v4 as uuidv4} from 'uuid';
 import RNCallKeep from 'react-native-callkeep';
 import BackgroundTimer from 'react-native-background-timer';
+import {
+  requestUserPermission,
+  getFcmToken,
+  NotificationListener,
+} from '../../push_notif';
 
 import styles from './styles';
 
@@ -47,7 +52,6 @@ export const HomeScreen = ({navigation}) => {
       alertDescription: 'This application needs to access your phone accounts',
       cancelButton: 'Cancel',
       okButton: 'ok',
-      selfManaged: false,
     },
   };
 
@@ -68,7 +72,19 @@ export const HomeScreen = ({navigation}) => {
     extension: '120', // register extension
   });
 
-  useEffect(() => {}, [pitelSDK]);
+  // useEffect(() => {}, [pitelSDK]);
+  useEffect(() => {
+    initFCM();
+    NotificationListener();
+  }, []);
+
+  const initFCM = async () => {
+    const fcmToken = await getFcmToken();
+
+    console.log('===========fcmToken====1=======');
+    console.log(fcmToken);
+    console.log('========================');
+  };
 
   // Input call out phone number
   const phoneNumber = '121';

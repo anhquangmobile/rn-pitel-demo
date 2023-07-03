@@ -42,3 +42,8 @@ echo 'export PATH=${PATH}:$HOME/Library/Android/sdk/platform-tools/' >> ~/.zshrc
 source ~/.zshrc
 adb devices
 ```
+
+Note: 1.0.3 package id
+
+- Find: com.pitel.pitelconnect.dev
+- Replace: com.rn_pitel_demo

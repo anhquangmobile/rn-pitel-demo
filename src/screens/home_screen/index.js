@@ -54,19 +54,6 @@ export const HomeScreen = ({navigation}) => {
   //       'cVBEnJPHYUpnntbe0uViuB:APA91bEu2cYQRSdN4iouCTM55zTKXfbA1mJklD5ihzZMcV0_5GXdJ5ZhBFb0c9rioAfD8usYnOKiu_D6jMxq4gaJ6Po_Ujk6Ss8GP0ty8wjsjh_jUWZfc08hKk8T_3y7VkSeAWwBFCbN',
   //   },
   // };
-
-  const callkitSetup = {
-    ios: {
-      appName: 'rn_pitel_demo',
-    },
-    android: {
-      alertTitle: 'Permissions required',
-      alertDescription: 'This application needs to access your phone accounts',
-      cancelButton: 'Cancel',
-      okButton: 'ok',
-    },
-  };
-
   // useState & useRegister
   const [callId, setCallId] = useState('');
   const [iosPushToken, setIOSPushToken] = useState('');
@@ -145,43 +132,12 @@ export const HomeScreen = ({navigation}) => {
   };
 
   return (
-    <PitelCallNotif
-      callId={callId}
-      setCallId={setCallId}
-      callkitSetup={callkitSetup}
-      onIOSToken={iosToken => {
-        setIOSPushToken(iosToken);
-      }}
-      onNativeCall={data => {
-        console.log('onNativeCall', data);
-      }}
-      onAnswerCallAction={data => {
-        console.log('onAnswerCallAction', data);
-        setAcceptCall(true);
-        if (pitelSDK !== undefined) {
-          pitelSDK.accept();
-        }
-      }}
-      onEndCallAction={data => {
-        console.log('onEndCallAction', data);
-        setAcceptCall(false);
-      }}
-      onIncomingCallDisplayed={data => {
-        console.log('onIncomingCallDisplayed', data);
-      }}
-      onToggleMute={data => {
-        console.log('onToggleMute', data);
-      }}
-      onDTMF={data => {
-        console.log('onDTMF', data);
-      }}>
-      <HomeScreenComponent
-        navigation={navigation}
-        sdkOptions={sdkOptions}
-        acceptCall={acceptCall}
-        handleRegisterToken={_registerDeviceToken}
-        handleRemoveToken={_removeDeviceToken}
-      />
-    </PitelCallNotif>
+    <HomeScreenComponent
+      navigation={navigation}
+      sdkOptions={sdkOptions}
+      acceptCall={acceptCall}
+      handleRegisterToken={_registerDeviceToken}
+      handleRemoveToken={_removeDeviceToken}
+    />
   );
 };

@@ -1,20 +1,48 @@
 import React, {useEffect, useState} from 'react';
 import {TouchableOpacity, Text, View} from 'react-native';
-import {PitelCallOut, useRegister} from 'react-native-pitel-voip';
+import {
+  PitelCallOut,
+  PitelCallNotif,
+  useRegister,
+  getFcmToken,
+  NotificationListener,
+  registerDeviceToken,
+  removeDeviceToken,
+} from 'react-native-pitel-voip';
 import 'react-native-get-random-values';
 import RNCallKeep from 'react-native-callkeep';
 
 import styles from './styles';
 
+const callkitSetup = {
+  ios: {
+    appName: 'rn_pitel_demo',
+  },
+  android: {
+    alertTitle: 'Permissions required',
+    alertDescription: 'This application needs to access your phone accounts',
+    cancelButton: 'Cancel',
+    okButton: 'ok',
+    foregroundService: {
+      channelId: 'com.pitel.pitelconnect.dev',
+      channelName: 'Foreground service for my app',
+      notificationTitle: 'My app is running on background',
+      notificationIcon: 'Path to the resource icon of the notification',
+    },
+  },
+};
+
 export const HomeScreenComponent = ({
   navigation,
   sdkOptions,
-  acceptCall,
+  // acceptCall,
   handleRegisterToken,
   handleRemoveToken,
 }) => {
   // useState & useRegister
   const [pitelSDK, setPitelSDK] = useState();
+  const [callId, setCallId] = useState('');
+  const [acceptCall, setAcceptCall] = useState(false);
 
   const {
     callState,
@@ -38,6 +66,12 @@ export const HomeScreenComponent = ({
     }
   }, [acceptCall]);
 
+  // useEffect(() => {
+  //   if (callState == 'CALL_RECEIVED') {
+  //     pitelSDK.accept();
+  //   }
+  // }, [callState]);
+
   // Handle function
   const handleCreated = () => {
     navigation.navigate('Call', {
@@ -49,13 +83,14 @@ export const HomeScreenComponent = ({
   };
 
   const handleReceived = () => {
+    console.log('===========1===========');
     pitelSDK.accept();
-    navigation.navigate('Call', {
-      pitelSDK: pitelSDK,
-      phoneNumber: receivedPhoneNumber,
-      direction: 'Incoming',
-      callState,
-    });
+    // navigation.navigate('Call', {
+    //   pitelSDK: pitelSDK,
+    //   phoneNumber: receivedPhoneNumber,
+    //   direction: 'Incoming',
+    //   callState,
+    // });
   };
 
   const handleHangup = () => {
@@ -66,35 +101,65 @@ export const HomeScreenComponent = ({
   };
 
   return (
-    <View style={styles.container}>
-      <Text>{registerState}</Text>
-      <TouchableOpacity
-        style={styles.btnRegister}
-        onPress={() => {
-          if (registerState === 'UNREGISTER') {
-            registerFunc();
-            handleRegisterToken();
-          }
-          if (registerState === 'REGISTER') {
-            pitelSDK.unregister();
-            handleRemoveToken();
-          }
-        }}>
-        <Text>{registerState === 'REGISTER' ? 'UNREGISTER' : 'REGISTER'}</Text>
-      </TouchableOpacity>
+    <PitelCallNotif
+      callId={callId}
+      setCallId={setCallId}
+      callkitSetup={callkitSetup}
+      onIOSToken={iosToken => {
+        setIOSPushToken(iosToken);
+      }}
+      onNativeCall={data => {
+        console.log('onNativeCall', data);
+      }}
+      onAnswerCallAction={data => {
+        console.log('onAnswerCallAction', data);
+        setAcceptCall(true);
+      }}
+      onEndCallAction={data => {
+        console.log('onEndCallAction', data);
+        setAcceptCall(false);
+      }}
+      onIncomingCallDisplayed={data => {
+        console.log('onIncomingCallDisplayed', data);
+      }}
+      onToggleMute={data => {
+        console.log('onToggleMute', data);
+      }}
+      onDTMF={data => {
+        console.log('onDTMF', data);
+      }}>
+      <View style={styles.container}>
+        <Text>{registerState}</Text>
+        <TouchableOpacity
+          style={styles.btnRegister}
+          onPress={() => {
+            if (registerState === 'UNREGISTER') {
+              registerFunc();
+              handleRegisterToken();
+            }
+            if (registerState === 'REGISTER') {
+              pitelSDK.unregister();
+              handleRemoveToken();
+            }
+          }}>
+          <Text>
+            {registerState === 'REGISTER' ? 'UNREGISTER' : 'REGISTER'}
+          </Text>
+        </TouchableOpacity>
 
-      <PitelCallOut
-        child={<Text>Call</Text>}
-        callToNumber={phoneNumber}
-        sdkOptions={sdkOptions}
-        pitelSDK={pitelSDK}
-        setCallState={setCallState}
-        callState={callState}
-        style={styles.btnCall}
-        onCreated={handleCreated}
-        onReceived={handleReceived}
-        onHangup={handleHangup}
-      />
-    </View>
+        <PitelCallOut
+          child={<Text>Call</Text>}
+          callToNumber={phoneNumber}
+          sdkOptions={sdkOptions}
+          pitelSDK={pitelSDK}
+          setCallState={setCallState}
+          callState={callState}
+          style={styles.btnCall}
+          onCreated={handleCreated}
+          onReceived={handleReceived}
+          onHangup={handleHangup}
+        />
+      </View>
+    </PitelCallNotif>
   );
 };

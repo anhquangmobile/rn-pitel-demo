@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1083920495761-iq69vu77k4el7g3m54sp292cl8lkpd0n.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1083920495761-iq69vu77k4el7g3m54sp292cl8lkpd0n</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBSzq9aNB7-xg8iOOM_GGBGwBrPVMiFMMU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1083920495761</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.pitel.pitelconnect.dev</string>
+	<key>PROJECT_ID</key>
+	<string>pitel-87bff</string>
+	<key>STORAGE_BUCKET</key>
+	<string>pitel-87bff.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1083920495761:ios:7c15a04ab45f09a0557b30</string>
+</dict>
+</plist>

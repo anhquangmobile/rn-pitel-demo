@@ -3,6 +3,7 @@
 #import <PushKit/PushKit.h>
 #import "RNVoipPushNotificationManager.h"
 #import <React/RCTLog.h>
+#import <Firebase.h>
 
                   
 #import <React/RCTBridge.h>
@@ -36,6 +37,7 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [FIRApp configure];
   RCTAppSetupPrepareApp(application, true);
 
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];

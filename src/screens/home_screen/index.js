@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {TouchableOpacity, Text, View} from 'react-native';
+import {TouchableOpacity, Text, View, Platform} from 'react-native';
 import {
   PitelCallOut,
   PitelCallNotif,
   useRegister,
   getFcmToken,
   NotificationListener,
+  registerDeviceToken,
+  removeDeviceToken,
 } from 'react-native-pitel-voip';
 import 'react-native-get-random-values';
 import {v4 as uuidv4} from 'uuid';
@@ -32,13 +34,25 @@ export const HomeScreen = ({navigation}) => {
   // };
 
   //! SUPPORT TEST
-  const sdkOptions = {
-    sipOnly: true,
-    sipDomain: 'ccp-demo.tel4vn.com',
-    wsServer: 'wss://psbc01.tel4vn.com:7444',
-    sipPassword: 'Agent20@@2023',
-    debug: true,
-  };
+  // const sdkOptions = {
+  //   sipOnly: true,
+  //   sipDomain: 'ccp-demo.tel4vn.com',
+  //   wsServer: 'wss://psbc01.tel4vn.com:7444',
+  //   sipPassword: 'Agent20@@2023',
+  //   debug: true,
+  //   contactParams: {
+  //     transport: 'ws',
+  //     'pn-provider': Platform.OS == 'android' ? 'fcm' : 'apns',
+  //     'pn-prid':
+  //       '1b433bd00ffac5aedb6f79e652891d3c8b2119b69c691b365878457cc3f239bc',
+  //     'pn-param':
+  //       Platform.OS == 'android'
+  //         ? 'com.pitel.pitelconnect.dev'
+  //         : 'XP2BMU4626.com.pitel.pitelconnect.dev.voip',
+  //     'fcm-token':
+  //       'cVBEnJPHYUpnntbe0uViuB:APA91bEu2cYQRSdN4iouCTM55zTKXfbA1mJklD5ihzZMcV0_5GXdJ5ZhBFb0c9rioAfD8usYnOKiu_D6jMxq4gaJ6Po_Ujk6Ss8GP0ty8wjsjh_jUWZfc08hKk8T_3y7VkSeAWwBFCbN',
+  //   },
+  // };
 
   const callkitSetup = {
     ios: {
@@ -55,6 +69,10 @@ export const HomeScreen = ({navigation}) => {
   // useState & useRegister
   const [pitelSDK, setPitelSDK] = useState();
   const [callId, setCallId] = useState('');
+  const [iosPushToken, setIOSPushToken] = useState('');
+  const [deviceToken, setDeviceToken] = useState('');
+  const [fcmToken, setFcmToken] = useState('');
+  const [sdkOptions, setSdkOptions] = useState();
 
   const {
     callState,
@@ -66,22 +84,46 @@ export const HomeScreen = ({navigation}) => {
   } = useRegister({
     sdkOptions: sdkOptions,
     setPitelSDK: setPitelSDK,
-    extension: '120', // register extension
+    // extension: '120', //! IOS register extension
+    extension: '121', //! ANDROID register extension
   });
 
   // useEffect(() => {}, [pitelSDK]);
   useEffect(() => {
-    initFCM();
     NotificationListener();
-  }, []);
+    initSdkOption();
+  }, [iosPushToken]);
 
-  const initFCM = async () => {
+  const initSdkOption = async () => {
     const fcmToken = await getFcmToken();
-
-    console.log('===========fcmToken====1=======');
-    console.log(fcmToken);
-    console.log('========================');
+    const deviceToken = Platform.OS == 'android' ? fcmToken : iosPushToken;
+    setFcmToken(fcmToken);
+    setDeviceToken(deviceToken);
+    const sdkOptionsInit = {
+      sipOnly: true,
+      userAgentString: 'Pitel Connect',
+      sipDomain: 'ccp-demo.tel4vn.com:50061',
+      wsServer: 'wss://psbc01.tel4vn.com:7444',
+      // sipPassword: 'Agent20@@2023',
+      sipPassword: 'Agent21@@2023',
+      debug: true,
+      contactParams: {
+        transport: 'ws',
+        'pn-provider': Platform.OS == 'android' ? 'fcm' : 'apns',
+        'pn-prid': deviceToken,
+        'pn-param':
+          Platform.OS == 'android'
+            ? 'com.pitel.pitelconnect.dev'
+            : 'XP2BMU4626.com.pitel.pitelconnect.dev.voip',
+        'fcm-token': fcmToken,
+      },
+    };
+    setSdkOptions(sdkOptionsInit);
   };
+
+  // const initFCM = async () => {
+  //   const fcmToken = await getFcmToken();
+  // };
 
   // Input call out phone number
   const phoneNumber = '121';
@@ -97,6 +139,7 @@ export const HomeScreen = ({navigation}) => {
   };
 
   const handleReceived = () => {
+    pitelSDK.accept();
     navigation.navigate('Call', {
       pitelSDK: pitelSDK,
       phoneNumber: receivedPhoneNumber,
@@ -112,11 +155,18 @@ export const HomeScreen = ({navigation}) => {
   };
 
   //! TO DO: Handle Accept Call
-  const handleAcceptIncomingCall = () => {
-    if (pitelSDK !== null) {
-      pitelSDK.unregister();
-      registerFunc();
-    }
+  const handleAcceptIncomingCall = async () => {
+    console.log('===========1===========');
+    console.log(pitelSDK);
+    console.log('========================');
+    // await initSdkOption();
+    // registerFunc();
+    // if (pitelSDK !== null || pitelSDK !== undefined) {
+    //   pitelSDK.unregister();
+    //   registerFunc();
+    // } else {
+    //   registerFunc();
+    // }
   };
 
   //! Android
@@ -133,16 +183,44 @@ export const HomeScreen = ({navigation}) => {
     RNCallKeep.displayIncomingCall(callUUID, number, number, 'number', false);
   };
 
+  const _registerDeviceToken = async () => {
+    const res = await registerDeviceToken({
+      pn_token: deviceToken,
+      pn_type: Platform.OS == 'android' ? 'android' : 'ios',
+      app_id: 'com.pitel.pitelconnect.dev',
+      domain: 'ccp-demo.tel4vn.com',
+      // extension: '120', //! IOS
+      extension: '121', //! ANDROID
+      app_mode: 'dev',
+      fcm_token: fcmToken,
+    });
+    console.log('===========res===========');
+    console.log(res);
+    console.log('========================');
+  };
+
+  const _removeDeviceToken = () => {
+    removeDeviceToken({
+      pn_token: deviceToken,
+      domain: 'ccp-demo.tel4vn.com',
+      // extension: '120', //! IOS
+      extension: '121', //! ANDROI
+    });
+  };
   return (
     <PitelCallNotif
       callId={callId}
       setCallId={setCallId}
       callkitSetup={callkitSetup}
+      onIOSToken={iosToken => {
+        setIOSPushToken(iosToken);
+      }}
       onNativeCall={data => {
         console.log('onNativeCall', data);
       }}
       onAnswerCallAction={data => {
         console.log('onAnswerCallAction', data);
+        handleAcceptIncomingCall();
       }}
       onEndCallAction={data => {
         console.log('onEndCallAction', data);
@@ -163,9 +241,11 @@ export const HomeScreen = ({navigation}) => {
           onPress={() => {
             if (registerState === 'UNREGISTER') {
               registerFunc();
+              _registerDeviceToken();
             }
             if (registerState === 'REGISTER') {
               pitelSDK.unregister();
+              _removeDeviceToken();
             }
           }}>
           <Text>
@@ -174,7 +254,8 @@ export const HomeScreen = ({navigation}) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={displayIncomingCallNow}
+          // onPress={displayIncomingCallNow}
+          onPress={handleAcceptIncomingCall}
           style={styles.button}
           hitSlop={hitSlop}>
           <Text>Display incoming call now</Text>

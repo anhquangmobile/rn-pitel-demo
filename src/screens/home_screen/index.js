@@ -13,6 +13,7 @@ import 'react-native-get-random-values';
 import {v4 as uuidv4} from 'uuid';
 import RNCallKeep from 'react-native-callkeep';
 import BackgroundTimer from 'react-native-background-timer';
+import {HomeScreenComponent} from './home_screen';
 
 import styles from './styles';
 
@@ -67,30 +68,18 @@ export const HomeScreen = ({navigation}) => {
   };
 
   // useState & useRegister
-  const [pitelSDK, setPitelSDK] = useState();
   const [callId, setCallId] = useState('');
   const [iosPushToken, setIOSPushToken] = useState('');
   const [deviceToken, setDeviceToken] = useState('');
   const [fcmToken, setFcmToken] = useState('');
   const [sdkOptions, setSdkOptions] = useState();
+  const [acceptCall, setAcceptCall] = useState(false);
 
-  const {
-    callState,
-    receivedPhoneNumber,
-    registerState,
-
-    setCallState,
-    registerFunc,
-  } = useRegister({
-    sdkOptions: sdkOptions,
-    setPitelSDK: setPitelSDK,
-    // extension: '120', //! IOS register extension
-    extension: '121', //! ANDROID register extension
-  });
-
-  // useEffect(() => {}, [pitelSDK]);
   useEffect(() => {
     NotificationListener();
+  }, []);
+
+  useEffect(() => {
     initSdkOption();
   }, [iosPushToken]);
 
@@ -119,59 +108,6 @@ export const HomeScreen = ({navigation}) => {
       },
     };
     setSdkOptions(sdkOptionsInit);
-  };
-
-  // const initFCM = async () => {
-  //   const fcmToken = await getFcmToken();
-  // };
-
-  // Input call out phone number
-  const phoneNumber = '121';
-
-  // Handle function
-  const handleCreated = () => {
-    navigation.navigate('Call', {
-      pitelSDK: pitelSDK,
-      phoneNumber: phoneNumber,
-      direction: 'Outgoing',
-      callState,
-    });
-  };
-
-  const handleReceived = () => {
-    pitelSDK.accept();
-    navigation.navigate('Call', {
-      pitelSDK: pitelSDK,
-      phoneNumber: receivedPhoneNumber,
-      direction: 'Incoming',
-      callState,
-    });
-  };
-
-  const handleHangup = () => {
-    if (navigation.canGoBack()) {
-      navigation.popToTop();
-    }
-  };
-
-  //! TO DO: Handle Accept Call
-  const handleAcceptIncomingCall = async () => {
-    console.log('===========1===========');
-    console.log(pitelSDK);
-    console.log('========================');
-    // await initSdkOption();
-    // registerFunc();
-    // if (pitelSDK !== null || pitelSDK !== undefined) {
-    //   pitelSDK.unregister();
-    //   registerFunc();
-    // } else {
-    //   registerFunc();
-    // }
-  };
-
-  //! Android
-  const displayIncomingCallNow = () => {
-    displayIncomingCall(getRandomNumber());
   };
 
   const displayIncomingCall = number => {
@@ -207,6 +143,7 @@ export const HomeScreen = ({navigation}) => {
       extension: '121', //! ANDROI
     });
   };
+
   return (
     <PitelCallNotif
       callId={callId}
@@ -220,10 +157,14 @@ export const HomeScreen = ({navigation}) => {
       }}
       onAnswerCallAction={data => {
         console.log('onAnswerCallAction', data);
-        handleAcceptIncomingCall();
+        setAcceptCall(true);
+        if (pitelSDK !== undefined) {
+          pitelSDK.accept();
+        }
       }}
       onEndCallAction={data => {
         console.log('onEndCallAction', data);
+        setAcceptCall(false);
       }}
       onIncomingCallDisplayed={data => {
         console.log('onIncomingCallDisplayed', data);
@@ -234,46 +175,13 @@ export const HomeScreen = ({navigation}) => {
       onDTMF={data => {
         console.log('onDTMF', data);
       }}>
-      <View style={styles.container}>
-        <Text>{registerState}</Text>
-        <TouchableOpacity
-          style={styles.btnRegister}
-          onPress={() => {
-            if (registerState === 'UNREGISTER') {
-              registerFunc();
-              _registerDeviceToken();
-            }
-            if (registerState === 'REGISTER') {
-              pitelSDK.unregister();
-              _removeDeviceToken();
-            }
-          }}>
-          <Text>
-            {registerState === 'REGISTER' ? 'UNREGISTER' : 'REGISTER'}
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          // onPress={displayIncomingCallNow}
-          onPress={handleAcceptIncomingCall}
-          style={styles.button}
-          hitSlop={hitSlop}>
-          <Text>Display incoming call now</Text>
-        </TouchableOpacity>
-
-        <PitelCallOut
-          child={<Text>Call</Text>}
-          callToNumber={phoneNumber}
-          sdkOptions={sdkOptions}
-          pitelSDK={pitelSDK}
-          setCallState={setCallState}
-          callState={callState}
-          style={styles.btnCall}
-          onCreated={handleCreated}
-          onReceived={handleReceived}
-          onHangup={handleHangup}
-        />
-      </View>
+      <HomeScreenComponent
+        navigation={navigation}
+        sdkOptions={sdkOptions}
+        acceptCall={acceptCall}
+        handleRegisterToken={_registerDeviceToken}
+        handleRemoveToken={_removeDeviceToken}
+      />
     </PitelCallNotif>
   );
 };

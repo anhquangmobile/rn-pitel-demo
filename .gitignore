@@ -34,6 +34,7 @@ local.properties
 *.keystore
 !debug.keystore
 upload-keystore.jks
+key.properties
 
 # node.js
 #

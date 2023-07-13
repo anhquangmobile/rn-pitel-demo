@@ -26,6 +26,8 @@ yarn android
 
 ```
 yarn ios --device="device_name"
+yarn ios --device="Quang iPhone"
+yarn ios --configuration Release --device "Quang iPhone"
 yarn android --device="device_name"
 ```
 

@@ -1,9 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {TouchableOpacity, Text, View, Platform} from 'react-native';
+import {Platform} from 'react-native';
 import {
-  PitelCallOut,
-  PitelCallNotif,
-  useRegister,
   getFcmToken,
   NotificationListener,
   registerDeviceToken,
@@ -15,12 +12,8 @@ import RNCallKeep from 'react-native-callkeep';
 import BackgroundTimer from 'react-native-background-timer';
 import {HomeScreenComponent} from './home_screen';
 
-import styles from './styles';
-
 BackgroundTimer.start();
-const getRandomNumber = () => String(Math.floor(Math.random() * 100000));
 const getNewUuid = () => uuidv4();
-const hitSlop = {top: 10, left: 10, right: 10, bottom: 10};
 const format = uuid => uuid.split('-')[0];
 
 export const HomeScreen = ({navigation}) => {
@@ -80,8 +73,8 @@ export const HomeScreen = ({navigation}) => {
       userAgentString: 'Pitel Connect',
       sipDomain: 'ccp-demo.tel4vn.com:50061',
       wsServer: 'wss://psbc01.tel4vn.com:7444',
-      // sipPassword: 'Agent20@@2023',
-      sipPassword: 'Agent21@@2023',
+      sipPassword: 'Agent20@@2023', //! TEST IOS
+      // sipPassword: 'Agent21@@2023',  //! TEST ANDROID
       debug: true,
       contactParams: {
         transport: 'ws',
@@ -112,8 +105,8 @@ export const HomeScreen = ({navigation}) => {
       pn_type: Platform.OS == 'android' ? 'android' : 'ios',
       app_id: 'com.pitel.pitelconnect.dev',
       domain: 'ccp-demo.tel4vn.com',
-      // extension: '120', //! IOS
-      extension: '121', //! ANDROID
+      extension: '120', //! IOS
+      // extension: '121', //! ANDROID
       app_mode: 'dev',
       fcm_token: fcmToken,
     });
@@ -126,8 +119,8 @@ export const HomeScreen = ({navigation}) => {
     removeDeviceToken({
       pn_token: deviceToken,
       domain: 'ccp-demo.tel4vn.com',
-      // extension: '120', //! IOS
-      extension: '121', //! ANDROI
+      extension: '120', //! IOS
+      // extension: '121', //! ANDROID
     });
   };
 
@@ -138,6 +131,7 @@ export const HomeScreen = ({navigation}) => {
       acceptCall={acceptCall}
       handleRegisterToken={_registerDeviceToken}
       handleRemoveToken={_removeDeviceToken}
+      setIOSPushToken={setIOSPushToken}
     />
   );
 };

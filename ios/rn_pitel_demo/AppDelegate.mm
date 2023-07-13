@@ -106,13 +106,9 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 //  NSDictionary *alert = [content valueForKey:@"alert"];
   NSString *callerName = [payload.dictionaryPayload valueForKey:@"nameCaller"];
   NSString *handle = [payload.dictionaryPayload valueForKey:@"handle"];
-  
-// TEST
-//  NSString *uuid = @"44d915e1-5ff4-4bed-bf13-c423048ec97a";
-//  NSDictionary *alert = [content valueForKey:@"alert"];
-//  NSString *callerName = @"Anh Quang";
-//  NSString *handle = @"";
-
+  if(handle == nil){
+    handle = @"";
+  }
 
   RCTLogInfo(@"Pretending to create an event %@ at %@", uuid, callerName);
   [RNCallKeep reportNewIncomingCall: uuid

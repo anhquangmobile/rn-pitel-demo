@@ -1,13 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {TouchableOpacity, Text, View} from 'react-native';
+import {TouchableOpacity, Text, View, Platform} from 'react-native';
+import BackgroundTimer from 'react-native-background-timer';
 import {
   PitelCallOut,
   PitelCallNotif,
   useRegister,
-  getFcmToken,
-  NotificationListener,
-  registerDeviceToken,
-  removeDeviceToken,
 } from 'react-native-pitel-voip';
 import 'react-native-get-random-values';
 import RNCallKeep from 'react-native-callkeep';
@@ -32,12 +29,14 @@ const callkitSetup = {
   },
 };
 
+BackgroundTimer.start();
+
 export const HomeScreenComponent = ({
   navigation,
   sdkOptions,
-  // acceptCall,
   handleRegisterToken,
   handleRemoveToken,
+  setIOSPushToken,
 }) => {
   // useState & useRegister
   const [pitelSDK, setPitelSDK] = useState();
@@ -54,12 +53,14 @@ export const HomeScreenComponent = ({
   } = useRegister({
     sdkOptions: sdkOptions,
     setPitelSDK: setPitelSDK,
-    // extension: '120', //! IOS register extension
-    extension: '121', //! ANDROID register extension
+    extension: '120', //! TEST IOS register extension
+    // extension: '121', //! TEST ANDROID register extension
   });
 
   // Input call out phone number
-  const phoneNumber = '121';
+  const phoneNumber = '121'; //! TEST IOS register extension
+  // const phoneNumber = '120'; //! TEST ANDROID register extension
+
   useEffect(() => {
     if (acceptCall) {
       registerFunc();
@@ -85,12 +86,14 @@ export const HomeScreenComponent = ({
   const handleReceived = () => {
     console.log('===========1===========');
     pitelSDK.accept();
-    // navigation.navigate('Call', {
-    //   pitelSDK: pitelSDK,
-    //   phoneNumber: receivedPhoneNumber,
-    //   direction: 'Incoming',
-    //   callState,
-    // });
+    if (Platform.OS == 'ios') {
+      navigation.navigate('Call', {
+        pitelSDK: pitelSDK,
+        phoneNumber: receivedPhoneNumber,
+        direction: 'Incoming',
+        callState,
+      });
+    }
   };
 
   const handleHangup = () => {

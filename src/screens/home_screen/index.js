@@ -88,6 +88,7 @@ export const HomeScreen = ({navigation}) => {
       },
     };
     setSdkOptions(sdkOptionsInit);
+    // console.log(sdkOptionsInit);
   };
 
   const displayIncomingCall = number => {
@@ -129,6 +130,7 @@ export const HomeScreen = ({navigation}) => {
       navigation={navigation}
       sdkOptions={sdkOptions}
       acceptCall={acceptCall}
+      iosPushToken={iosPushToken}
       handleRegisterToken={_registerDeviceToken}
       handleRemoveToken={_removeDeviceToken}
       setIOSPushToken={setIOSPushToken}

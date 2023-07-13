@@ -37,6 +37,7 @@ export const HomeScreenComponent = ({
   handleRegisterToken,
   handleRemoveToken,
   setIOSPushToken,
+  iosPushToken,
 }) => {
   // useState & useRegister
   const [pitelSDK, setPitelSDK] = useState();
@@ -67,11 +68,29 @@ export const HomeScreenComponent = ({
     }
   }, [acceptCall]);
 
-  // useEffect(() => {
-  //   if (callState == 'CALL_RECEIVED') {
-  //     pitelSDK.accept();
-  //   }
-  // }, [callState]);
+  useEffect(() => {
+    checkIsCall();
+
+    // if (iosPushToken) {
+    //   const timer = setTimeout(() => {
+    //     registerFunc();
+    //   }, 2000);
+    //   return () => clearTimeout(timer);
+    // }
+  }, [sdkOptions, iosPushToken]);
+
+  const checkIsCall = async () => {
+    const res = await RNCallKeep.getCalls();
+    if (res.length == 0) {
+      if (sdkOptions) {
+        if (sdkOptions.contactParams['pn-prid'] !== '') {
+          // alert('1');
+          registerFunc();
+        }
+      }
+      console.log(res);
+    }
+  };
 
   // Handle function
   const handleCreated = () => {

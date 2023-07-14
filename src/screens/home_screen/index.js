@@ -73,8 +73,8 @@ export const HomeScreen = ({navigation}) => {
       userAgentString: 'Pitel Connect',
       sipDomain: 'ccp-demo.tel4vn.com:50061',
       wsServer: 'wss://psbc01.tel4vn.com:7444',
-      sipPassword: 'Agent20@@2023', //! TEST IOS
-      // sipPassword: 'Agent21@@2023',  //! TEST ANDROID
+      // sipPassword: 'Agent20@@2023', //! TEST IOS
+      sipPassword: 'Agent21@@2023', //! TEST ANDROID
       debug: true,
       contactParams: {
         transport: 'ws',
@@ -106,8 +106,8 @@ export const HomeScreen = ({navigation}) => {
       pn_type: Platform.OS == 'android' ? 'android' : 'ios',
       app_id: 'com.pitel.pitelconnect.dev',
       domain: 'ccp-demo.tel4vn.com',
-      extension: '120', //! IOS
-      // extension: '121', //! ANDROID
+      // extension: '120', //! IOS
+      extension: '121', //! ANDROID
       app_mode: 'dev',
       fcm_token: fcmToken,
     });
@@ -120,8 +120,8 @@ export const HomeScreen = ({navigation}) => {
     removeDeviceToken({
       pn_token: deviceToken,
       domain: 'ccp-demo.tel4vn.com',
-      extension: '120', //! IOS
-      // extension: '121', //! ANDROID
+      // extension: '120', //! IOS
+      extension: '121', //! ANDROID
     });
   };
 

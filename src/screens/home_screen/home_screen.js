@@ -43,6 +43,7 @@ export const HomeScreenComponent = ({
   const [pitelSDK, setPitelSDK] = useState();
   const [callId, setCallId] = useState('');
   const [acceptCall, setAcceptCall] = useState(false);
+  const [cancelCall, setCancelCall] = useState(false);
 
   const {
     callState,
@@ -54,43 +55,23 @@ export const HomeScreenComponent = ({
   } = useRegister({
     sdkOptions: sdkOptions,
     setPitelSDK: setPitelSDK,
-    extension: '120', //! TEST IOS register extension
-    // extension: '121', //! TEST ANDROID register extension
+    // extension: '120', //! TEST IOS register extension
+    extension: '121', //! TEST ANDROID register extension
   });
 
   // Input call out phone number
-  const phoneNumber = '121'; //! TEST IOS register extension
-  // const phoneNumber = '120'; //! TEST ANDROID register extension
+  // const phoneNumber = '121'; //! TEST IOS register extension
+  const phoneNumber = '120'; //! TEST ANDROID register extension
 
   useEffect(() => {
     if (acceptCall) {
       registerFunc();
     }
-  }, [acceptCall]);
-
-  useEffect(() => {
-    checkIsCall();
-
-    // if (iosPushToken) {
-    //   const timer = setTimeout(() => {
-    //     registerFunc();
-    //   }, 2000);
-    //   return () => clearTimeout(timer);
-    // }
-  }, [sdkOptions, iosPushToken]);
-
-  const checkIsCall = async () => {
-    const res = await RNCallKeep.getCalls();
-    if (res.length == 0) {
-      if (sdkOptions) {
-        if (sdkOptions.contactParams['pn-prid'] !== '') {
-          // alert('1');
-          registerFunc();
-        }
-      }
-      console.log(res);
+    if (cancelCall) {
+      pitelSDK.hangup();
+      setCancelCall(false);
     }
-  };
+  }, [acceptCall, cancelCall]);
 
   // Handle function
   const handleCreated = () => {
@@ -103,7 +84,6 @@ export const HomeScreenComponent = ({
   };
 
   const handleReceived = () => {
-    console.log('===========1===========');
     pitelSDK.accept();
     if (Platform.OS == 'ios') {
       navigation.navigate('Call', {
@@ -127,6 +107,9 @@ export const HomeScreenComponent = ({
       callId={callId}
       setCallId={setCallId}
       callkitSetup={callkitSetup}
+      //!
+      sdkOptions={sdkOptions}
+      registerFunc={registerFunc}
       onIOSToken={iosToken => {
         setIOSPushToken(iosToken);
       }}
@@ -135,11 +118,18 @@ export const HomeScreenComponent = ({
       }}
       onAnswerCallAction={data => {
         console.log('onAnswerCallAction', data);
+        let {callUUID} = data;
+        // RNCallKeep.backToForeground();
+        // BackgroundTimer.setTimeout(() => {
+        //   RNCallKeep.setCurrentCallActive(callUUID);
+        //   registerFunc();
+        // }, 1000);
         setAcceptCall(true);
       }}
       onEndCallAction={data => {
         console.log('onEndCallAction', data);
         setAcceptCall(false);
+        setCancelCall(true);
       }}
       onIncomingCallDisplayed={data => {
         console.log('onIncomingCallDisplayed', data);

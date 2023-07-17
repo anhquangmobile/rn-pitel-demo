@@ -119,11 +119,12 @@ export const HomeScreenComponent = ({
       onAnswerCallAction={data => {
         console.log('onAnswerCallAction', data);
         let {callUUID} = data;
-        // RNCallKeep.backToForeground();
+        RNCallKeep.backToForeground();
         // BackgroundTimer.setTimeout(() => {
         //   RNCallKeep.setCurrentCallActive(callUUID);
         //   registerFunc();
         // }, 1000);
+        // RNCallKeep.backToForeground();
         setAcceptCall(true);
       }}
       onEndCallAction={data => {

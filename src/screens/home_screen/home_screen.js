@@ -85,14 +85,12 @@ export const HomeScreenComponent = ({
 
   const handleReceived = () => {
     pitelSDK.accept();
-    if (Platform.OS == 'ios') {
-      navigation.navigate('Call', {
-        pitelSDK: pitelSDK,
-        phoneNumber: receivedPhoneNumber,
-        direction: 'Incoming',
-        callState,
-      });
-    }
+    navigation.navigate('Call', {
+      pitelSDK: pitelSDK,
+      phoneNumber: receivedPhoneNumber,
+      direction: 'Incoming',
+      callState,
+    });
   };
 
   const handleHangup = () => {
@@ -117,14 +115,6 @@ export const HomeScreenComponent = ({
         console.log('onNativeCall', data);
       }}
       onAnswerCallAction={data => {
-        console.log('onAnswerCallAction', data);
-        let {callUUID} = data;
-        RNCallKeep.backToForeground();
-        // BackgroundTimer.setTimeout(() => {
-        //   RNCallKeep.setCurrentCallActive(callUUID);
-        //   registerFunc();
-        // }, 1000);
-        // RNCallKeep.backToForeground();
         setAcceptCall(true);
       }}
       onEndCallAction={data => {

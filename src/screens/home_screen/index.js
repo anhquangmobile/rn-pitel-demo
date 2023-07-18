@@ -48,7 +48,6 @@ export const HomeScreen = ({navigation}) => {
   //   },
   // };
   // useState & useRegister
-  const [callId, setCallId] = useState('');
   const [iosPushToken, setIOSPushToken] = useState('');
   const [deviceToken, setDeviceToken] = useState('');
   const [fcmToken, setFcmToken] = useState('');
@@ -88,7 +87,6 @@ export const HomeScreen = ({navigation}) => {
       },
     };
     setSdkOptions(sdkOptionsInit);
-    // console.log(sdkOptionsInit);
   };
 
   const displayIncomingCall = number => {

@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {TouchableOpacity, Text, View} from 'react-native';
 import {
   PitelCallOut,
@@ -6,7 +6,6 @@ import {
   useRegister,
   PitelSDKContext,
 } from 'react-native-pitel-voip';
-import 'react-native-get-random-values';
 import RNCallKeep from 'react-native-callkeep';
 
 import styles from './styles';
@@ -37,7 +36,9 @@ export const HomeScreenComponent = ({
   setIOSPushToken,
 }) => {
   // useState & useRegister
-  const {pitelSDK, setPitelSDK} = useContext(PitelSDKContext);
+  const {pitelSDK, setPitelSDK, callID, setCallID} =
+    useContext(PitelSDKContext);
+  const [isCallOut, setIsCallOut] = useState(false);
 
   const {
     callState,
@@ -73,6 +74,7 @@ export const HomeScreenComponent = ({
       phoneNumber: receivedPhoneNumber,
       direction: 'Incoming',
       callState,
+      callID,
     });
   };
 
@@ -89,6 +91,8 @@ export const HomeScreenComponent = ({
       pitelSDK={pitelSDK}
       setCallState={setCallState}
       callState={callState}
+      isCallOut={isCallOut}
+      setIsCallOut={setIsCallOut}
       onCreated={handleCreated}
       onReceived={handleReceived}
       onHangup={handleHangup}
@@ -101,9 +105,10 @@ export const HomeScreenComponent = ({
       // onNativeCall={data => {
       //   console.log('onNativeCall', data);
       // }}
-      // onAnswerCallAction={data => {
-      //   console.log('onAnswerCallAction', data);
-      // }}
+      onAnswerCallAction={data => {
+        console.log('onAnswerCallAction', data);
+        setCallID(data.callUUID);
+      }}
       // onEndCallAction={data => {
       //   console.log('onEndCallAction', data);
       // }}
@@ -140,6 +145,8 @@ export const HomeScreenComponent = ({
           child={<Text>Call</Text>}
           callToNumber={phoneNumber}
           pitelSDK={pitelSDK}
+          isCallOut={isCallOut}
+          setIsCallOut={setIsCallOut}
           style={styles.btnCall}
         />
       </View>

@@ -6,7 +6,7 @@ export const CallScreen = ({route, navigation}) => {
   const [speaker, setSpeaker] = useState(false);
   const {pitelSDK} = useContext(PitelSDKContext);
 
-  const {phoneNumber, direction, callState} = route.params;
+  const {phoneNumber, direction, callState, callID} = route.params;
 
   return (
     <PitelCallKit
@@ -16,6 +16,7 @@ export const CallScreen = ({route, navigation}) => {
       direction={direction}
       microState={mute}
       speakerState={speaker}
+      callID={callID}
       onHangup={() => {
         pitelSDK.hangup();
       }}

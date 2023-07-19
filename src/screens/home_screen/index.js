@@ -69,7 +69,7 @@ export const HomeScreen = ({navigation}) => {
     setDeviceToken(deviceToken);
     const sdkOptionsInit = {
       sipOnly: true,
-      userAgentString: 'Pitel Connect',
+      // userAgentString: 'Pitel Connect',
       sipDomain: 'ccp-demo.tel4vn.com:50061',
       wsServer: 'wss://psbc01.tel4vn.com:7444',
       // sipPassword: 'Agent20@@2023', //! TEST IOS

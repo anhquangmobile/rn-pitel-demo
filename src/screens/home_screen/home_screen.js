@@ -67,11 +67,15 @@ export const HomeScreenComponent = ({
     if (acceptCall) {
       registerFunc();
     }
+  }, [acceptCall]);
+
+  //! For IOS
+  useEffect(() => {
     if (cancelCall) {
       pitelSDK.hangup();
       setCancelCall(false);
     }
-  }, [acceptCall, cancelCall]);
+  }, [cancelCall]);
 
   // Handle function
   const handleCreated = () => {

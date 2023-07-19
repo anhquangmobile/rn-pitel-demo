@@ -1,6 +1,5 @@
 import React, {useState, useContext} from 'react';
-import {PitelCallKit} from 'react-native-pitel-voip';
-import {PitelSDKContext} from '../../pitel_sdk_context';
+import {PitelCallKit, PitelSDKContext} from 'react-native-pitel-voip';
 
 export const CallScreen = ({route, navigation}) => {
   const [mute, setMute] = useState(false);

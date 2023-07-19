@@ -4,10 +4,10 @@ import {
   PitelCallOut,
   PitelCallNotif,
   useRegister,
+  PitelSDKContext,
 } from 'react-native-pitel-voip';
 import 'react-native-get-random-values';
 import RNCallKeep from 'react-native-callkeep';
-import {PitelSDKContext} from '../../pitel_sdk_context';
 
 import styles from './styles';
 
@@ -98,24 +98,25 @@ export const HomeScreenComponent = ({
       onIOSToken={iosToken => {
         setIOSPushToken(iosToken);
       }}
-      onNativeCall={data => {
-        console.log('onNativeCall', data);
-      }}
-      onAnswerCallAction={data => {
-        console.log('onAnswerCallAction', data);
-      }}
-      onEndCallAction={data => {
-        console.log('onEndCallAction', data);
-      }}
-      onIncomingCallDisplayed={data => {
-        console.log('onIncomingCallDisplayed', data);
-      }}
-      onToggleMute={data => {
-        console.log('onToggleMute', data);
-      }}
-      onDTMF={data => {
-        console.log('onDTMF', data);
-      }}>
+      // onNativeCall={data => {
+      //   console.log('onNativeCall', data);
+      // }}
+      // onAnswerCallAction={data => {
+      //   console.log('onAnswerCallAction', data);
+      // }}
+      // onEndCallAction={data => {
+      //   console.log('onEndCallAction', data);
+      // }}
+      // onIncomingCallDisplayed={data => {
+      //   console.log('onIncomingCallDisplayed', data);
+      // }}
+      // onToggleMute={data => {
+      //   console.log('onToggleMute', data);
+      // }}
+      // onDTMF={data => {
+      //   console.log('onDTMF', data);
+      // }}
+    >
       <View style={styles.container}>
         <Text>{registerState}</Text>
         <TouchableOpacity

@@ -3,7 +3,7 @@
  */
 
 import {AppRegistry} from 'react-native';
-import App from './App.tsx';
+import App from './App.jsx';
 import {name as appName} from './app.json';
 import {NotificationBackground} from 'react-native-pitel-voip';
 

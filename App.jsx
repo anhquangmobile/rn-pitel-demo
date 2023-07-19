@@ -3,7 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {HomeScreen} from './src/screens/home_screen';
 import {CallScreen} from './src/screens/call_screen';
-import {PitelSDKProvider} from './src/pitel_sdk_context';
+import {PitelSDKProvider} from 'react-native-pitel-voip';
 
 const Stack = createNativeStackNavigator();
 

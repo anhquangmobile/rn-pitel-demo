@@ -1,11 +1,9 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import {TouchableOpacity, Text, View} from 'react-native';
-import BackgroundTimer from 'react-native-background-timer';
 import {
   PitelCallOut,
   PitelCallNotif,
   useRegister,
-  pitelRegister,
 } from 'react-native-pitel-voip';
 import 'react-native-get-random-values';
 import RNCallKeep from 'react-native-callkeep';
@@ -31,59 +29,29 @@ const callkitSetup = {
   },
 };
 
-BackgroundTimer.start();
-
 export const HomeScreenComponent = ({
   navigation,
   sdkOptions,
   handleRegisterToken,
   handleRemoveToken,
   setIOSPushToken,
-  iosPushToken,
 }) => {
   // useState & useRegister
-  // const [pitelSDK, setPitelSDK] = useState();
-  const [callId, setCallId] = useState('');
-  const [direction, setDirection] = useState('OUTGOING');
-
-  const [callState, setCallState] = useState('');
-  const [receivedPhoneNumber, setReceivedPhoneNumber] = useState('');
-  const [registerState, setRegisterState] = useState('UNREGISTER');
-
   const {pitelSDK, setPitelSDK} = useContext(PitelSDKContext);
 
-  useEffect(() => {
-    if (callState === 'REGISTER') {
-      setRegisterState('REGISTER');
-    }
-    if (callState === 'UNREGISTER') {
-      setRegisterState('UNREGISTER');
-    }
-  }, [callState]);
+  const {
+    callState,
+    receivedPhoneNumber,
+    registerState,
 
-  const registerFunc = () => {
-    const pitelSDKRes = pitelRegister({
-      sdkOptions: sdkOptions,
-      setCallState: setCallState,
-      setReceivedPhoneNumber: setReceivedPhoneNumber,
-      extension: '121',
-    });
-    setPitelSDK(pitelSDKRes);
-  };
-
-  // const {
-  //   callState,
-  //   receivedPhoneNumber,
-  //   registerState,
-
-  //   setCallState,
-  //   registerFunc,
-  // } = useRegister({
-  //   sdkOptions: sdkOptions,
-  //   setPitelSDK: setPitelSDK,
-  //   // extension: '120', //! TEST IOS register extension
-  //   extension: '121', //! TEST ANDROID register extension
-  // });
+    setCallState,
+    registerFunc,
+  } = useRegister({
+    sdkOptions: sdkOptions,
+    setPitelSDK: setPitelSDK,
+    // extension: '120', //! TEST IOS register extension
+    extension: '121', //! TEST ANDROID register extension
+  });
 
   // Input call out phone number
   // const phoneNumber = '121'; //! TEST IOS register extension
@@ -101,7 +69,6 @@ export const HomeScreenComponent = ({
 
   const handleReceived = () => {
     pitelSDK.accept();
-    setDirection('INCOMING');
     navigation.navigate('Call', {
       phoneNumber: receivedPhoneNumber,
       direction: 'Incoming',
@@ -118,10 +85,13 @@ export const HomeScreenComponent = ({
 
   return (
     <PitelCallNotif
-      callId={callId}
-      setCallId={setCallId}
       callkitSetup={callkitSetup}
       pitelSDK={pitelSDK}
+      setCallState={setCallState}
+      callState={callState}
+      onCreated={handleCreated}
+      onReceived={handleReceived}
+      onHangup={handleHangup}
       //!
       sdkOptions={sdkOptions}
       registerFunc={registerFunc}
@@ -168,14 +138,8 @@ export const HomeScreenComponent = ({
         <PitelCallOut
           child={<Text>Call</Text>}
           callToNumber={phoneNumber}
-          sdkOptions={sdkOptions}
           pitelSDK={pitelSDK}
-          setCallState={setCallState}
-          callState={callState}
           style={styles.btnCall}
-          onCreated={handleCreated}
-          onReceived={handleReceived}
-          onHangup={handleHangup}
         />
       </View>
     </PitelCallNotif>

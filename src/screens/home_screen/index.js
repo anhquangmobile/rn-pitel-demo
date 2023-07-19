@@ -128,7 +128,6 @@ export const HomeScreen = ({navigation}) => {
       navigation={navigation}
       sdkOptions={sdkOptions}
       acceptCall={acceptCall}
-      iosPushToken={iosPushToken}
       handleRegisterToken={_registerDeviceToken}
       handleRemoveToken={_removeDeviceToken}
       setIOSPushToken={setIOSPushToken}

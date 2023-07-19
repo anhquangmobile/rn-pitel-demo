@@ -70,12 +70,12 @@ export const HomeScreenComponent = ({
   }, [acceptCall]);
 
   //! For IOS
-  useEffect(() => {
-    if (cancelCall) {
-      pitelSDK.hangup();
-      setCancelCall(false);
-    }
-  }, [cancelCall]);
+  // useEffect(() => {
+  //   if (cancelCall) {
+  //     pitelSDK.hangup();
+  //     setCancelCall(false);
+  //   }
+  // }, [cancelCall]);
 
   // Handle function
   const handleCreated = () => {
@@ -119,6 +119,10 @@ export const HomeScreenComponent = ({
         console.log('onNativeCall', data);
       }}
       onAnswerCallAction={data => {
+        console.log('onAnswerCallAction', data);
+        let {callUUID} = data;
+        RNCallKeep.setCurrentCallActive(callUUID);
+        // setCallId(callUUID);
         setAcceptCall(true);
       }}
       onEndCallAction={data => {

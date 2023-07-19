@@ -1,13 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import {TouchableOpacity, Text, View, Platform} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {TouchableOpacity, Text, View} from 'react-native';
 import BackgroundTimer from 'react-native-background-timer';
 import {
   PitelCallOut,
   PitelCallNotif,
   useRegister,
+  pitelRegister,
 } from 'react-native-pitel-voip';
 import 'react-native-get-random-values';
 import RNCallKeep from 'react-native-callkeep';
+import {PitelSDKContext} from '../../pitel_sdk_context';
 
 import styles from './styles';
 
@@ -40,42 +42,52 @@ export const HomeScreenComponent = ({
   iosPushToken,
 }) => {
   // useState & useRegister
-  const [pitelSDK, setPitelSDK] = useState();
+  // const [pitelSDK, setPitelSDK] = useState();
   const [callId, setCallId] = useState('');
-  const [acceptCall, setAcceptCall] = useState(false);
-  const [cancelCall, setCancelCall] = useState(false);
+  const [direction, setDirection] = useState('OUTGOING');
 
-  const {
-    callState,
-    receivedPhoneNumber,
-    registerState,
+  const [callState, setCallState] = useState('');
+  const [receivedPhoneNumber, setReceivedPhoneNumber] = useState('');
+  const [registerState, setRegisterState] = useState('UNREGISTER');
 
-    setCallState,
-    registerFunc,
-  } = useRegister({
-    sdkOptions: sdkOptions,
-    setPitelSDK: setPitelSDK,
-    // extension: '120', //! TEST IOS register extension
-    extension: '121', //! TEST ANDROID register extension
-  });
+  const {pitelSDK, setPitelSDK} = useContext(PitelSDKContext);
+
+  useEffect(() => {
+    if (callState === 'REGISTER') {
+      setRegisterState('REGISTER');
+    }
+    if (callState === 'UNREGISTER') {
+      setRegisterState('UNREGISTER');
+    }
+  }, [callState]);
+
+  const registerFunc = () => {
+    const pitelSDKRes = pitelRegister({
+      sdkOptions: sdkOptions,
+      setCallState: setCallState,
+      setReceivedPhoneNumber: setReceivedPhoneNumber,
+      extension: '121',
+    });
+    setPitelSDK(pitelSDKRes);
+  };
+
+  // const {
+  //   callState,
+  //   receivedPhoneNumber,
+  //   registerState,
+
+  //   setCallState,
+  //   registerFunc,
+  // } = useRegister({
+  //   sdkOptions: sdkOptions,
+  //   setPitelSDK: setPitelSDK,
+  //   // extension: '120', //! TEST IOS register extension
+  //   extension: '121', //! TEST ANDROID register extension
+  // });
 
   // Input call out phone number
   // const phoneNumber = '121'; //! TEST IOS register extension
   const phoneNumber = '120'; //! TEST ANDROID register extension
-
-  useEffect(() => {
-    if (acceptCall) {
-      registerFunc();
-    }
-  }, [acceptCall]);
-
-  //! For IOS
-  // useEffect(() => {
-  //   if (cancelCall) {
-  //     pitelSDK.hangup();
-  //     setCancelCall(false);
-  //   }
-  // }, [cancelCall]);
 
   // Handle function
   const handleCreated = () => {
@@ -89,8 +101,8 @@ export const HomeScreenComponent = ({
 
   const handleReceived = () => {
     pitelSDK.accept();
+    setDirection('INCOMING');
     navigation.navigate('Call', {
-      pitelSDK: pitelSDK,
       phoneNumber: receivedPhoneNumber,
       direction: 'Incoming',
       callState,
@@ -109,6 +121,7 @@ export const HomeScreenComponent = ({
       callId={callId}
       setCallId={setCallId}
       callkitSetup={callkitSetup}
+      pitelSDK={pitelSDK}
       //!
       sdkOptions={sdkOptions}
       registerFunc={registerFunc}
@@ -120,15 +133,9 @@ export const HomeScreenComponent = ({
       }}
       onAnswerCallAction={data => {
         console.log('onAnswerCallAction', data);
-        let {callUUID} = data;
-        RNCallKeep.setCurrentCallActive(callUUID);
-        // setCallId(callUUID);
-        setAcceptCall(true);
       }}
       onEndCallAction={data => {
         console.log('onEndCallAction', data);
-        setAcceptCall(false);
-        setCancelCall(true);
       }}
       onIncomingCallDisplayed={data => {
         console.log('onIncomingCallDisplayed', data);

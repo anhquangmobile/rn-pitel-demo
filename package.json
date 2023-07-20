@@ -16,7 +16,7 @@
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
     "pitel-react-native-webrtc": "^106.0.0-beta.6",
-    "pitel-sdk-webrtc": "^1.0.6",
+    "pitel-sdk-webrtc": "^1.0.7",
     "react": "18.2.0",
     "react-native": "0.71.4",
     "react-native-background-timer": "^2.4.1",

@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {TouchableOpacity, Text, View} from 'react-native';
 import {
   PitelCallOut,
@@ -7,6 +7,7 @@ import {
   PitelSDKContext,
 } from 'react-native-pitel-voip';
 import RNCallKeep from 'react-native-callkeep';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import styles from './styles';
 
@@ -39,6 +40,7 @@ export const HomeScreenComponent = ({
   const {pitelSDK, setPitelSDK, callID, setCallID} =
     useContext(PitelSDKContext);
   const [isCallOut, setIsCallOut] = useState(false);
+  const [isLogin, setIsLogin] = useState('FALSE');
 
   const {
     callState,
@@ -50,13 +52,39 @@ export const HomeScreenComponent = ({
   } = useRegister({
     sdkOptions: sdkOptions,
     setPitelSDK: setPitelSDK,
-    // extension: '120', //! TEST IOS register extension
-    extension: '121', //! TEST ANDROID register extension
+    extension: '120', //! TEST IOS register extension
+    // extension: '121', //! TEST ANDROID register extension
   });
 
   // Input call out phone number
-  // const phoneNumber = '121'; //! TEST IOS register extension
-  const phoneNumber = '120'; //! TEST ANDROID register extension
+  const phoneNumber = '121'; //! TEST IOS register extension
+  // const phoneNumber = '120'; //! TEST ANDROID register extension
+
+  useEffect(() => {
+    getStorageIsLogin();
+  }, []);
+
+  //! Storage login
+  const getStorageIsLogin = async () => {
+    try {
+      const value = await AsyncStorage.getItem('IS_LOGIN');
+      if (value !== null) {
+        setIsLogin(value);
+      }
+    } catch (e) {
+      // error reading value
+      console.log(`Error: ${e}`);
+    }
+  };
+  const setStorageIsLogin = async value => {
+    try {
+      await AsyncStorage.setItem('IS_LOGIN', value);
+      setIsLogin(value);
+    } catch (e) {
+      // saving error
+      console.log(`Error: ${e}`);
+    }
+  };
 
   // Handle function
   const handleCreated = () => {
@@ -91,7 +119,9 @@ export const HomeScreenComponent = ({
       pitelSDK={pitelSDK}
       setCallState={setCallState}
       callState={callState}
+      isLogin={isLogin}
       isCallOut={isCallOut}
+      setCallID={setCallID}
       setIsCallOut={setIsCallOut}
       onCreated={handleCreated}
       onReceived={handleReceived}
@@ -105,10 +135,10 @@ export const HomeScreenComponent = ({
       // onNativeCall={data => {
       //   console.log('onNativeCall', data);
       // }}
-      onAnswerCallAction={data => {
-        console.log('onAnswerCallAction', data);
-        setCallID(data.callUUID);
-      }}
+      // onAnswerCallAction={data => {
+      //   console.log('onAnswerCallAction', data);
+      //   setCallID(data.callUUID);
+      // }}
       // onEndCallAction={data => {
       //   console.log('onEndCallAction', data);
       // }}
@@ -130,10 +160,12 @@ export const HomeScreenComponent = ({
             if (registerState === 'UNREGISTER') {
               registerFunc();
               handleRegisterToken();
+              setStorageIsLogin('TRUE');
             }
             if (registerState === 'REGISTER') {
               pitelSDK.unregister();
               handleRemoveToken();
+              setStorageIsLogin('FALSE');
             }
           }}>
           <Text>

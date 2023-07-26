@@ -11,9 +11,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import styles from './styles';
 
+//! ANDROID OR IOS
+const ext = `${EXTENSION}`;
+const phone = `${CALL_OUT_PHONE_NUMBER}`;
+const iosAppName = `${IOS_APP_NAME}`;
+
 const callkitSetup = {
   ios: {
-    appName: 'rn_pitel_demo',
+    appName: iosAppName,
   },
   android: {
     alertTitle: 'Permissions required',
@@ -28,10 +33,6 @@ const callkitSetup = {
     },
   },
 };
-
-//! ANDROID OR IOS
-const ext = Platform.OS == 'android' ? '121' : '120';
-const phone = Platform.OS == 'android' ? '120' : '121';
 
 export const HomeScreenComponent = ({
   navigation,
@@ -129,27 +130,7 @@ export const HomeScreenComponent = ({
       onHangup={handleHangup}
       onIOSToken={iosToken => {
         setIOSPushToken(iosToken);
-      }}
-      // onNativeCall={data => {
-      //   console.log('onNativeCall', data);
-      // }}
-      // onAnswerCallAction={data => {
-      //   console.log('onAnswerCallAction', data);
-      //   setCallID(data.callUUID);
-      // }}
-      // onEndCallAction={data => {
-      //   console.log('onEndCallAction', data);
-      // }}
-      // onIncomingCallDisplayed={data => {
-      //   console.log('onIncomingCallDisplayed', data);
-      // }}
-      // onToggleMute={data => {
-      //   console.log('onToggleMute', data);
-      // }}
-      // onDTMF={data => {
-      //   console.log('onDTMF', data);
-      // }}
-    >
+      }}>
       <View style={styles.container}>
         <Text>{registerState}</Text>
         <TouchableOpacity

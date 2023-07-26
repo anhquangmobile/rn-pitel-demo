@@ -9,10 +9,21 @@ import {
 import {HomeScreenComponent} from './home_screen';
 
 //! ANDROID OR IOS
-const ext = Platform.OS == 'android' ? '121' : '120';
-const sipPass = Platform.OS == 'android' ? 'Agent21@@2023' : 'Agent20@@2023';
+const ext = `${EXTENSION}`;
+const sipPass = `${EXTENSION_SIP_PASSWORD}`;
+const appId = `${BUNDLE_ID}`;
+const domainUrl = `${DOMAIN}`;
 
 export const HomeScreen = ({navigation}) => {
+  const sdkOptionsInit = {
+    sipDomain: `${DOMAIN}:${PORT}`,
+    wssServer: `${WSS_URL}`,
+    sipPassword: sipPass,
+    bundleId: appId, // Bundle id for IOS
+    packageId: appId, // Package id for Android
+    teamId: `${TEAM_ID}`, // Team id of Apple developer account
+  };
+
   // useState & useRegister
   const [iosPushToken, setIOSPushToken] = useState('');
   const [sdkOptions, setSdkOptions] = useState();
@@ -20,18 +31,15 @@ export const HomeScreen = ({navigation}) => {
   const _registerDeviceToken = async () => {
     const fcmToken = await getFcmToken();
     const deviceToken = Platform.OS == 'android' ? fcmToken : iosPushToken;
-    const res = await registerDeviceToken({
+    await registerDeviceToken({
       pn_token: deviceToken,
       pn_type: Platform.OS == 'android' ? 'android' : 'ios',
-      app_id: 'com.pitel.pitelconnect.dev',
-      domain: 'ccp-demo.tel4vn.com',
+      app_id: appId,
+      domain: domainUrl,
       extension: ext,
-      app_mode: 'dev',
+      app_mode: __DEV__ ? 'dev' : 'production',
       fcm_token: fcmToken,
     });
-    console.log('===========res===========');
-    console.log(res);
-    console.log('========================');
   };
 
   const _removeDeviceToken = async () => {
@@ -39,19 +47,9 @@ export const HomeScreen = ({navigation}) => {
     const deviceToken = Platform.OS == 'android' ? fcmToken : iosPushToken;
     removeDeviceToken({
       pn_token: deviceToken,
-      domain: 'ccp-demo.tel4vn.com',
+      domain: domainUrl,
       extension: ext,
     });
-  };
-
-  const sdkOptionsInit = {
-    sipDomain: 'ccp-demo.tel4vn.com:50061',
-    // wssServer: 'wss://psbc01.tel4vn.com:7444',
-    wssServer: 'wss://wss-mobile.tel4vn.com:7444',
-    sipPassword: sipPass,
-    bundleId: 'com.pitel.pitelconnect.dev',
-    packageId: 'com.pitel.pitelconnect.dev',
-    teamId: 'XP2BMU4626',
   };
 
   return (

@@ -29,6 +29,10 @@ const callkitSetup = {
   },
 };
 
+//! ANDROID OR IOS
+const ext = Platform.OS == 'android' ? '121' : '120';
+const phone = Platform.OS == 'android' ? '120' : '121';
+
 export const HomeScreenComponent = ({
   navigation,
   sdkOptions,
@@ -52,13 +56,11 @@ export const HomeScreenComponent = ({
   } = useRegister({
     sdkOptions: sdkOptions,
     setPitelSDK: setPitelSDK,
-    extension: '120', //! TEST IOS register extension
-    // extension: '121', //! TEST ANDROID register extension
+    extension: ext,
   });
 
   // Input call out phone number
-  const phoneNumber = '121'; //! TEST IOS register extension
-  // const phoneNumber = '120'; //! TEST ANDROID register extension
+  const phoneNumber = phone;
 
   useEffect(() => {
     getStorageIsLogin();
@@ -72,7 +74,6 @@ export const HomeScreenComponent = ({
         setIsLogin(value);
       }
     } catch (e) {
-      // error reading value
       console.log(`Error: ${e}`);
     }
   };
@@ -81,7 +82,6 @@ export const HomeScreenComponent = ({
       await AsyncStorage.setItem('IS_LOGIN', value);
       setIsLogin(value);
     } catch (e) {
-      // saving error
       console.log(`Error: ${e}`);
     }
   };
@@ -97,7 +97,6 @@ export const HomeScreenComponent = ({
   };
 
   const handleReceived = () => {
-    pitelSDK.accept();
     navigation.navigate('Call', {
       phoneNumber: receivedPhoneNumber,
       direction: 'Incoming',
@@ -122,13 +121,12 @@ export const HomeScreenComponent = ({
       isLogin={isLogin}
       isCallOut={isCallOut}
       setCallID={setCallID}
+      sdkOptions={sdkOptions}
+      registerFunc={registerFunc}
       setIsCallOut={setIsCallOut}
       onCreated={handleCreated}
       onReceived={handleReceived}
       onHangup={handleHangup}
-      //!
-      sdkOptions={sdkOptions}
-      registerFunc={registerFunc}
       onIOSToken={iosToken => {
         setIOSPushToken(iosToken);
       }}

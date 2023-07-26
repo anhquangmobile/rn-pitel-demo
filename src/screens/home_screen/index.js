@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Platform} from 'react-native';
 import {
   getFcmToken,
@@ -7,6 +7,10 @@ import {
   removeDeviceToken,
 } from 'react-native-pitel-voip';
 import {HomeScreenComponent} from './home_screen';
+
+//! ANDROID OR IOS
+const ext = Platform.OS == 'android' ? '121' : '120';
+const sipPass = Platform.OS == 'android' ? 'Agent21@@2023' : 'Agent20@@2023';
 
 export const HomeScreen = ({navigation}) => {
   // useState & useRegister
@@ -21,8 +25,7 @@ export const HomeScreen = ({navigation}) => {
       pn_type: Platform.OS == 'android' ? 'android' : 'ios',
       app_id: 'com.pitel.pitelconnect.dev',
       domain: 'ccp-demo.tel4vn.com',
-      extension: '120', //! IOS
-      // extension: '121', //! ANDROID
+      extension: ext,
       app_mode: 'dev',
       fcm_token: fcmToken,
     });
@@ -37,16 +40,15 @@ export const HomeScreen = ({navigation}) => {
     removeDeviceToken({
       pn_token: deviceToken,
       domain: 'ccp-demo.tel4vn.com',
-      extension: '120', //! IOS
-      // extension: '121', //! ANDROID
+      extension: ext,
     });
   };
 
   const sdkOptionsInit = {
     sipDomain: 'ccp-demo.tel4vn.com:50061',
-    wssServer: 'wss://psbc01.tel4vn.com:7444',
-    // wssServer: 'wss://wss-mobile.tel4vn.com:7444',
-    sipPassword: 'Agent20@@2023', //! TEST IOS
+    // wssServer: 'wss://psbc01.tel4vn.com:7444',
+    wssServer: 'wss://wss-mobile.tel4vn.com:7444',
+    sipPassword: sipPass,
     bundleId: 'com.pitel.pitelconnect.dev',
     packageId: 'com.pitel.pitelconnect.dev',
     teamId: 'XP2BMU4626',

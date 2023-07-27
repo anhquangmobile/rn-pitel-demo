@@ -26,5 +26,27 @@ yarn android
 
 ```
 yarn ios --device="device_name"
+yarn ios --device="Quang iPhone"
+yarn ios --configuration Release --device "Quang iPhone"
 yarn android --device="device_name"
+yarn android --mode release
 ```
+
+- Run android
+
+```
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+```
+
+```
+echo 'export PATH=${PATH}:$HOME/Library/Android/sdk/platform-tools/' >> ~/.zshrc
+source ~/.zshrc
+adb devices
+```
+
+Note: 1.0.3 package id
+
+- Find: com.pitel.pitelconnect.dev
+- Replace: com.rn_pitel_demo

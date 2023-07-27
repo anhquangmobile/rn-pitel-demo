@@ -1,4 +1,4 @@
-package com.rn_pitel_demo;
+package com.pitel.pitelconnect.dev;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

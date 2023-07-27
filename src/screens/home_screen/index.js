@@ -1,92 +1,69 @@
-import React, {useEffect, useState} from 'react';
-import {TouchableOpacity, Text, View} from 'react-native';
-import {PitelCallOut, useRegister} from 'react-native-pitel-voip';
+import React, {useState} from 'react';
+import {Platform} from 'react-native';
+import {
+  getFcmToken,
+  PitelSDK,
+  registerDeviceToken,
+  removeDeviceToken,
+} from 'react-native-pitel-voip';
+import {HomeScreenComponent} from './home_screen';
 
-import styles from './styles';
+//! ANDROID OR IOS
+const ext = `${EXTENSION}`;
+const sipPass = `${EXTENSION_SIP_PASSWORD}`;
+const appId = `${BUNDLE_ID}`;
+const domainUrl = `${DOMAIN}`;
 
 export const HomeScreen = ({navigation}) => {
-  // sdkOptions config
-  const sdkOptions = {
-    sipOnly: true,
-    sipDomain: `${domain}`,
-    wsServer: `${wssServer}`,
-    sipPassword: `${extensionPassword}`,
-    debug: true,
+  const sdkOptionsInit = {
+    sipDomain: `${DOMAIN}:${PORT}`,
+    wssServer: `${WSS_URL}`,
+    sipPassword: sipPass,
+    bundleId: appId, // Bundle id for IOS
+    packageId: appId, // Package id for Android
+    teamId: `${TEAM_ID}`, // Team id of Apple developer account
   };
 
   // useState & useRegister
-  const [pitelSDK, setPitelSDK] = useState();
+  const [iosPushToken, setIOSPushToken] = useState('');
+  const [sdkOptions, setSdkOptions] = useState();
 
-  const {
-    callState,
-    receivedPhoneNumber,
-    registerState,
-
-    setCallState,
-    registerFunc,
-  } = useRegister({
-    sdkOptions: sdkOptions,
-    setPitelSDK: setPitelSDK,
-    extension: '104', // register extension
-  });
-
-  useEffect(() => {}, [pitelSDK]);
-
-  // Input call out phone number
-  const phoneNumber = '103';
-
-  // Handle function
-  const handleCreated = () => {
-    navigation.navigate('Call', {
-      pitelSDK: pitelSDK,
-      phoneNumber: phoneNumber,
-      direction: 'Outgoing',
-      callState,
+  const _registerDeviceToken = async () => {
+    const fcmToken = await getFcmToken();
+    const deviceToken = Platform.OS == 'android' ? fcmToken : iosPushToken;
+    await registerDeviceToken({
+      pn_token: deviceToken,
+      pn_type: Platform.OS == 'android' ? 'android' : 'ios',
+      app_id: appId,
+      domain: domainUrl,
+      extension: ext,
+      app_mode: __DEV__ ? 'dev' : 'production',
+      fcm_token: fcmToken,
     });
   };
 
-  const handleReceived = () => {
-    navigation.navigate('Call', {
-      pitelSDK: pitelSDK,
-      phoneNumber: receivedPhoneNumber,
-      direction: 'Incoming',
-      callState,
+  const _removeDeviceToken = async () => {
+    const fcmToken = await getFcmToken();
+    const deviceToken = Platform.OS == 'android' ? fcmToken : iosPushToken;
+    removeDeviceToken({
+      pn_token: deviceToken,
+      domain: domainUrl,
+      extension: ext,
     });
-  };
-
-  const handleHangup = () => {
-    if (navigation.canGoBack()) {
-      navigation.popToTop();
-    }
   };
 
   return (
-    <View style={styles.container}>
-      <Text>{registerState}</Text>
-      <TouchableOpacity
-        style={styles.btnRegister}
-        onPress={() => {
-          if (registerState === 'UNREGISTER') {
-            registerFunc();
-          }
-          if (registerState === 'REGISTER') {
-            pitelSDK.unregister();
-          }
-        }}>
-        <Text>{registerState === 'REGISTER' ? 'UNREGISTER' : 'REGISTER'}</Text>
-      </TouchableOpacity>
-      <PitelCallOut
-        child={<Text>Call</Text>}
-        callToNumber={phoneNumber}
+    <PitelSDK
+      sdkOptionsInit={sdkOptionsInit}
+      iosPushToken={iosPushToken}
+      setSdkOptions={setSdkOptions}>
+      <HomeScreenComponent
+        navigation={navigation}
         sdkOptions={sdkOptions}
-        pitelSDK={pitelSDK}
-        setCallState={setCallState}
-        callState={callState}
-        style={styles.btnCall}
-        onCreated={handleCreated}
-        onReceived={handleReceived}
-        onHangup={handleHangup}
+        handleRegisterToken={_registerDeviceToken}
+        handleRemoveToken={_removeDeviceToken}
+        setIOSPushToken={setIOSPushToken}
       />
-    </View>
+    </PitelSDK>
   );
 };

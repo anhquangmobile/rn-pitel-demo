@@ -1,15 +1,12 @@
-import React, {useState, useEffect} from 'react';
-import {PitelCallKit} from 'react-native-pitel-voip';
+import React, {useState, useContext} from 'react';
+import {PitelCallKit, PitelSDKContext} from 'react-native-pitel-voip';
 
 export const CallScreen = ({route, navigation}) => {
   const [mute, setMute] = useState(false);
   const [speaker, setSpeaker] = useState(false);
+  const {pitelSDK} = useContext(PitelSDKContext);
 
-  const {pitelSDK, phoneNumber, direction, callState} = route.params;
-
-  useEffect(() => {
-    return () => pitelSDK.hangup();
-  }, []);
+  const {phoneNumber, direction, callState, callID} = route.params;
 
   return (
     <PitelCallKit
@@ -19,6 +16,7 @@ export const CallScreen = ({route, navigation}) => {
       direction={direction}
       microState={mute}
       speakerState={speaker}
+      callID={callID}
       onHangup={() => {
         pitelSDK.hangup();
       }}

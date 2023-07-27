@@ -46,8 +46,7 @@ export const HomeScreen = ({navigation}) => {
 
   const sdkOptionsInit = {
     sipDomain: 'ccp-demo.tel4vn.com:50061',
-    // wssServer: 'wss://psbc01.tel4vn.com:7444',
-    wssServer: 'wss://wss-mobile.tel4vn.com:7444',
+    wssServer: 'wss://psbc02.tel4vn.com:7444',
     sipPassword: sipPass,
     bundleId: 'com.pitel.pitelconnect.dev',
     packageId: 'com.pitel.pitelconnect.dev',

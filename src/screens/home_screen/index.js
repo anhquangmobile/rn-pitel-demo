@@ -45,9 +45,11 @@ export const HomeScreen = ({navigation}) => {
   };
 
   const sdkOptionsInit = {
-    sipDomain: 'ccp-demo.tel4vn.com:50061',
+    sipDomain: 'ccp-demo.tel4vn.com',
+    port: '50061',
     wssServer: 'wss://psbc02.tel4vn.com:7444',
     sipPassword: sipPass,
+    extension: ext,
     bundleId: 'com.pitel.pitelconnect.dev',
     packageId: 'com.pitel.pitelconnect.dev',
     teamId: 'XP2BMU4626',

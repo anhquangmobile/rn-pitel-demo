@@ -156,7 +156,6 @@ export const HomeScreenComponent = ({
           style={styles.btnRegister}
           onPress={() => {
             if (registerState === 'UNREGISTER') {
-              registerFunc();
               handleRegisterToken();
               setStorageIsLogin('TRUE');
             }

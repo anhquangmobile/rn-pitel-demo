@@ -16,7 +16,9 @@ const domainUrl = `${DOMAIN}`;
 
 export const HomeScreen = ({navigation}) => {
   const sdkOptionsInit = {
-    sipDomain: `${DOMAIN}:${PORT}`,
+    sipDomain: `${DOMAIN}`,
+    port: `${PORT}`,
+    extension: ext,
     wssServer: `${WSS_URL}`,
     sipPassword: sipPass,
     bundleId: appId, // Bundle id for IOS

@@ -6113,10 +6113,10 @@ pitel-react-native-webrtc@^106.0.0-beta.6:
     event-target-shim "6.0.2"
     tar "6.1.11"
 
-pitel-sdk-webrtc@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/pitel-sdk-webrtc/-/pitel-sdk-webrtc-1.0.7.tgz#bad2f3d7a9b34ec02f63f7e0019e2b1b44be905e"
-  integrity sha512-YI1KkRAhoLonhPZYrDqWs5Q/O7D7Qgw6jxbn0QgiW6CCuLj8tkrMn+RvY1+qEvn6i8IGkRWjSya8wvKC+lPSzA==
+pitel-sdk-for-rn@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/pitel-sdk-for-rn/-/pitel-sdk-for-rn-0.0.1.tgz#429ebccebc3c5c831c384ab5283b8d1275b642e7"
+  integrity sha512-ilA67GnZdFoK8PS6kh6EgYQ8AGHnxzNXMZ6EcyvEO2YqGkfZup2vYKDnHm2arcjCiqI8yBZY7jAM+u7/5YqMUw==
 
 pkg-dir@^3.0.0:
   version "3.0.0"
@@ -6305,9 +6305,12 @@ react-native-incall-manager@^4.0.1:
   resolved "https://registry.npmjs.org/react-native-incall-manager/-/react-native-incall-manager-4.0.1.tgz"
   integrity sha512-Bqq7C+p7vCmCTpM8Xv6l4DJ3UJYzVr60IvkHMw1Ugs0KJswh3veBJrpk+hUPSETPT6J/5oUwxChXlNsymsh7fg==
 
-"react-native-pitel-voip@file:.yalc/react-native-pitel-voip":
-  version "0.0.7"
+react-native-pitel-voip@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-pitel-voip/-/react-native-pitel-voip-1.0.0.tgz#39f9f57df8fee3ae6b6c7b115858ef5e11387998"
+  integrity sha512-YnG9GS15vyqdh1ycr4hyhOGisJJP8tu9D94B2u2cCUM98fPgz/2VRNj+BXyxYcy39O55Ipaqxj8T0MMGmAgjKQ==
   dependencies:
+    "@react-native-async-storage/async-storage" "^1.19.1"
     "@react-native-firebase/messaging" "^18.1.0"
     react-native-callkeep "^4.3.9"
     uuid "^9.0.0"

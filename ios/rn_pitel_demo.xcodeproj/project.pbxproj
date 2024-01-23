@@ -514,6 +514,7 @@
 				DEVELOPMENT_TEAM = XP2BMU4626;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = rn_pitel_demo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -542,6 +543,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = XP2BMU4626;
 				INFOPLIST_FILE = rn_pitel_demo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

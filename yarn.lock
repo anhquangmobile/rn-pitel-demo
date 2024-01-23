@@ -6300,13 +6300,18 @@ react-native-gradle-plugin@^0.71.16:
   resolved "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.71.18.tgz"
   integrity sha512-7F6bD7B8Xsn3JllxcwHhFcsl9aHIig47+3eN4IHFNqfLhZr++3ElDrcqfMzugM+niWbaMi7bJ0kAkAL8eCpdWg==
 
-react-native-incall-manager@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.npmjs.org/react-native-incall-manager/-/react-native-incall-manager-4.0.1.tgz"
-  integrity sha512-Bqq7C+p7vCmCTpM8Xv6l4DJ3UJYzVr60IvkHMw1Ugs0KJswh3veBJrpk+hUPSETPT6J/5oUwxChXlNsymsh7fg==
+react-native-incall-manager@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-incall-manager/-/react-native-incall-manager-4.1.0.tgz#38601a2796932c0d815654f4c838722a2207bf56"
+  integrity sha512-v1c+XOGu5VudY5//E3i5xiaRA9v6RvevMzZ4RumLqI+hte+4XslB2z6HSek2FF0EmAnY1rCn4ckiwgkTI1Tmtw==
+
+react-native-permissions@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-4.0.4.tgz#5156d61230193c5eedd96a6e54f2a1e65d582baf"
+  integrity sha512-7xU71u1Xe239F7DCvO3rfuqthzOa52v5Nvd0OQ5OpEkL9S9UGhWMLRw0b7OC9zti846puTGJDnjy8FvXiAzgxQ==
 
 "react-native-pitel-voip@file:.yalc/react-native-pitel-voip":
-  version "0.0.7"
+  version "1.0.0"
   dependencies:
     "@react-native-async-storage/async-storage" "^1.19.1"
     "@react-native-firebase/messaging" "^18.1.0"

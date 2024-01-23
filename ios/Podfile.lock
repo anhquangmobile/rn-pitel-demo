@@ -538,7 +538,7 @@ PODS:
     - React-jsi (= 0.71.4)
     - React-logger (= 0.71.4)
     - React-perflogger (= 0.71.4)
-  - ReactNativeIncallManager (4.0.1):
+  - ReactNativeIncallManager (4.1.0):
     - React-Core
   - RNCallKeep (4.3.9):
     - React
@@ -552,6 +552,8 @@ PODS:
     - FirebaseCoreExtension (= 10.11.0)
     - React-Core
     - RNFBApp
+  - RNPermissions (4.0.4):
+    - React-Core
   - RNScreens (3.20.0):
     - React-Core
     - React-RCTImage
@@ -636,6 +638,7 @@ DEPENDENCIES:
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
+  - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVoipPushNotification (from `../node_modules/react-native-voip-push-notification`)
@@ -756,6 +759,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBMessaging:
     :path: "../node_modules/@react-native-firebase/messaging"
+  RNPermissions:
+    :path: "../node_modules/react-native-permissions"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   RNSVG:
@@ -828,11 +833,12 @@ SPEC CHECKSUMS:
   React-RCTVibration: ad17efcfb2fa8f6bfd8ac0cf48d96668b8b28e0b
   React-runtimeexecutor: 8fa50b38df6b992c76537993a2b0553d3b088004
   ReactCommon: b49a4b00ca6d181ff74b17c12b2d59ac4add0bde
-  ReactNativeIncallManager: 0d2cf9f4d50359728a30c08549762fe67a2efb81
+  ReactNativeIncallManager: 2385505fa5dfdbbc78925e3b8d23b30ce0cde40e
   RNCallKeep: 7c86d916fbc6b2184a5cf47967a240928994547e
   RNCAsyncStorage: f47fe18526970a69c34b548883e1aeceb115e3e1
   RNFBApp: 81a9593ff681b448d1847f5d5493906310cdebe3
   RNFBMessaging: 854b0ec4b6813c1f2fc09fac52bc3bfee28f225c
+  RNPermissions: 62a64a61709be1472900ed77b040b109ee50de21
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
   RNSVG: 53c661b76829783cdaf9b7a57258f3d3b4c28315
   RNVoipPushNotification: 1617f5a07be24066830213ae9252cb790b53886f
@@ -840,6 +846,6 @@ SPEC CHECKSUMS:
   Yoga: 79dd7410de6f8ad73a77c868d3d368843f0c93e0
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: ff99d048a1136763057d3fbfbec4d3378961dc18
+PODFILE CHECKSUM: e780037ca7bcb52febb69be8fbac77dd10538f9d
 
 COCOAPODS: 1.12.1

@@ -5,6 +5,9 @@ import {HomeScreen} from './src/screens/home_screen';
 import {CallScreen} from './src/screens/call_screen';
 import {PitelSDKProvider} from 'react-native-pitel-voip';
 import BackgroundTimer from 'react-native-background-timer';
+import {LogBox} from 'react-native';
+
+LogBox.ignoreAllLogs();
 BackgroundTimer.start();
 
 const Stack = createNativeStackNavigator();

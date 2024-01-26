@@ -94,9 +94,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.pitel.pitelconnect.dev"
+    namespace "com.pitel.uikit.demo"
     defaultConfig {
-        applicationId "com.pitel.pitelconnect.dev"
+        applicationId "com.pitel.uikit.demo"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

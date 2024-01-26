@@ -8,11 +8,16 @@ React Native - Pitel VoIP demo
 > **Note**
 > rn-pitel-demo using react native 0.71.4
 
-- **Setup to wake up app**: please follow guide in [here](https://github.com/tel4vn/flutter-pitel-voip/blob/main/PUSH_NOTIF.md) to setting push notification (FCM for android), Pushkit (for IOS).
+- **Setup to wake up app**: please follow guide in [here](https://github.com/anhquangmobile/react-native-pitel-voip/blob/main/%20PUSH_NOTIF.md) to setting push notification (FCM for android), Pushkit (for IOS).
 
 ```yaml
 yarn install
 ```
+
+- Replace your bundleId and packageId
+
+* Android: cd android/app/build.gradle: replace "com.pitel.uikit.demo" with your packageId.
+* IOS: set bundleId in CFBundleIdentifier (Info.plist)
 
 - Installing your Firebase configuration file:
 

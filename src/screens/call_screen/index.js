@@ -13,6 +13,7 @@ export const CallScreen = ({route, navigation}) => {
       phoneNumber={phoneNumber}
       direction={direction}
       callID={callID}
+      textClock={'Connecting...'}
       onHangup={() => {
         pitelSDK.hangup();
       }}

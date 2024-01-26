@@ -8,6 +8,7 @@ import {
 } from 'react-native-pitel-voip';
 import RNCallKeep from 'react-native-callkeep';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {request, PERMISSIONS} from 'react-native-permissions';
 
 import styles from './styles';
 
@@ -149,6 +150,19 @@ export const HomeScreenComponent = ({
           <Text>
             {registerState === 'REGISTER' ? 'UNREGISTER' : 'REGISTER'}
           </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.btnRegister, {backgroundColor: 'orange'}]}
+          onPress={async () => {
+            if (Platform.OS == 'ios') {
+              await request(PERMISSIONS.IOS.BLUETOOTH);
+            }
+            if (Platform.OS == 'android') {
+              await request(PERMISSIONS.ANDROID.BLUETOOTH_CONNECT);
+            }
+          }}>
+          <Text>Request bluetooth</Text>
         </TouchableOpacity>
 
         <PitelCallOut

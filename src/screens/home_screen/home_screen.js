@@ -125,7 +125,6 @@ export const HomeScreenComponent = ({
       sdkOptions={sdkOptions}
       registerFunc={registerFunc}
       setIsCallOut={setIsCallOut}
-      onCreated={handleCreated}
       onReceived={handleReceived}
       onHangup={handleHangup}
       onIOSToken={iosToken => {
@@ -152,23 +151,20 @@ export const HomeScreenComponent = ({
       // }}
     >
       <View style={styles.container}>
-        <Text>{registerState}</Text>
         <TouchableOpacity
           style={styles.btnRegister}
           onPress={() => {
-            if (registerState === 'UNREGISTER') {
-              handleRegisterToken();
-              setStorageIsLogin('TRUE');
-            }
-            if (registerState === 'REGISTER') {
-              pitelSDK.unregister();
+            if (isLogin == 'TRUE') {
               handleRemoveToken();
+              setIsLogin('FALSE');
               setStorageIsLogin('FALSE');
+            } else {
+              setStorageIsLogin('TRUE');
+              setIsLogin('TRUE');
+              handleRegisterToken();
             }
           }}>
-          <Text>
-            {registerState === 'REGISTER' ? 'UNREGISTER' : 'REGISTER'}
-          </Text>
+          <Text>{isLogin == 'TRUE' ? 'Logout' : 'Login'}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.btnRegister, {backgroundColor: 'orange'}]}
@@ -185,6 +181,9 @@ export const HomeScreenComponent = ({
 
         <PitelCallOut
           child={<Text>Call</Text>}
+          registerFunc={registerFunc}
+          registerState={registerState}
+          onCreated={handleCreated}
           callToNumber={phoneNumber}
           pitelSDK={pitelSDK}
           isCallOut={isCallOut}

@@ -6311,7 +6311,7 @@ react-native-permissions@^4.0.4:
   integrity sha512-7xU71u1Xe239F7DCvO3rfuqthzOa52v5Nvd0OQ5OpEkL9S9UGhWMLRw0b7OC9zti846puTGJDnjy8FvXiAzgxQ==
 
 "react-native-pitel-voip@file:.yalc/react-native-pitel-voip":
-  version "1.0.0"
+  version "1.0.5"
   dependencies:
     "@react-native-async-storage/async-storage" "^1.19.1"
     "@react-native-firebase/messaging" "^18.1.0"

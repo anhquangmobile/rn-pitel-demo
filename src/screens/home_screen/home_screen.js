@@ -151,16 +151,18 @@ export const HomeScreenComponent = ({
       // }}
     >
       <View style={styles.container}>
+        <Text>{registerState}</Text>
         <TouchableOpacity
           style={styles.btnRegister}
           onPress={() => {
             if (isLogin == 'TRUE') {
               handleRemoveToken();
-              setIsLogin('FALSE');
               setStorageIsLogin('FALSE');
             } else {
+              if (registerState === 'REGISTER') {
+                pitelSDK.unregister();
+              }
               setStorageIsLogin('TRUE');
-              setIsLogin('TRUE');
               handleRegisterToken();
             }
           }}>

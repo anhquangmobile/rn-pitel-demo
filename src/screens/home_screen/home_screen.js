@@ -137,11 +137,12 @@ export const HomeScreenComponent = ({
           onPress={() => {
             if (isLogin == 'TRUE') {
               handleRemoveToken();
-              setIsLogin('FALSE');
               setStorageIsLogin('FALSE');
             } else {
+              if (registerState === 'REGISTER') {
+                pitelSDK.unregister();
+              }
               setStorageIsLogin('TRUE');
-              setIsLogin('TRUE');
               handleRegisterToken();
             }
           }}>

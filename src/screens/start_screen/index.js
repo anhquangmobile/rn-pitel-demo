@@ -22,8 +22,7 @@ export const StartScreen = ({navigation, route}) => {
   };
 
   return (
-    <View
-      style={{flex: 1, alignItems: 'center', justifyContent: 'space-around'}}>
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text>Start screen</Text>
       <Button
         onPress={() => navigation.navigate('Home')}
@@ -38,6 +37,7 @@ export const StartScreen = ({navigation, route}) => {
         setIsCallOut={setIsCallOut}
         style={styles.btnCall}
         onPress={() => handleCreated()}
+        enable={true}
       />
     </View>
   );

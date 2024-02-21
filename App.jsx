@@ -4,6 +4,7 @@ import {LogBox} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {HomeScreen} from './src/screens/home_screen';
 import {CallScreen} from './src/screens/call_screen';
+import {StartScreen} from './src/screens/start_screen';
 import {PitelSDKProvider} from 'react-native-pitel-voip';
 import BackgroundTimer from 'react-native-background-timer';
 
@@ -18,6 +19,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Home">
           <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="StartPage" component={StartScreen} />
           <Stack.Screen
             name="Call"
             component={CallScreen}

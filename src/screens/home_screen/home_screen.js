@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {TouchableOpacity, Text, View} from 'react-native';
+import {TouchableOpacity, Text, View, Button} from 'react-native';
 import {
   PitelCallOut,
   PitelCallNotif,
@@ -165,13 +165,12 @@ export const HomeScreenComponent = ({
           <Text>Request bluetooth</Text>
         </TouchableOpacity>
 
-        <PitelCallOut
-          child={<Text>Call</Text>}
-          callToNumber={phoneNumber}
-          pitelSDK={pitelSDK}
-          isCallOut={isCallOut}
-          setIsCallOut={setIsCallOut}
-          style={styles.btnCall}
+        <Button
+          onPress={() =>
+            navigation.navigate('StartPage', {callState: callState})
+          }
+          title="Go to StartPage"
+          color="#841584"
         />
       </View>
     </PitelCallNotif>
